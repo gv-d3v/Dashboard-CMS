@@ -1,0 +1,12 @@
+- JWT Token expiry 
+- Edit user image
+- Img upload instead of img link usage
+- File manager / FTP
+- Password reset for other users
+- Profile modal
+- Login autocomplete failure 
+- Website content management page
+- Settings page
+- Customer Support Page
+- Fix typos
+- Remove unnecessary comments
