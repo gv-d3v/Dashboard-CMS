@@ -1,4 +1,5 @@
-- JWT Token expiry 
+- Add JWT Token expiry 
+- Protect API calls
 - Edit user image
 - Img upload instead of img link usage
 - File manager / FTP
