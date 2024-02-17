@@ -1,16 +1,23 @@
-'use client'
+"use client";
 
-import { Fragment, useRef, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useRef, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 
-export default function AddURLModal({openURL, setOpenURL, setAddImageUrl, setImageUrl}) {
-
-  const [url, setUrl] = useState('');
-  const cancelButtonRef = useRef(null)
+export default function AddURLModal({ openURL, setOpenURL, setAddImageUrl, setImageUrl }) {
+  const [url, setUrl] = useState("");
+  const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={openURL} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpenURL}>
+    <Transition.Root
+      show={openURL}
+      as={Fragment}
+    >
+      <Dialog
+        as="div"
+        className="relative z-10"
+        initialFocus={cancelButtonRef}
+        onClose={setOpenURL}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -37,13 +44,20 @@ export default function AddURLModal({openURL, setOpenURL, setAddImageUrl, setIma
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    
                     <div className="mt-3 text-center sm:ml-4 sm:mr-4 sm:mt-0 sm:text-left w-full">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-base font-semibold leading-6 text-gray-900"
+                      >
                         Add image URL:
                       </Dialog.Title>
                       <div className="mt-2 w-auto">
-                        <input className="w-full" type="text" placeholder='Image URL' onChange={e => setUrl(e.target.value)}/>
+                        <input
+                          className="w-full"
+                          type="text"
+                          placeholder="Image URL"
+                          onChange={e => setUrl(e.target.value)}
+                        />
                       </div>
                     </div>
                   </div>
@@ -51,8 +65,15 @@ export default function AddURLModal({openURL, setOpenURL, setAddImageUrl, setIma
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto"F
-                    onClick={() => {setOpenURL(false); if(url!==""){setAddImageUrl(url);setImageUrl((url))}}}
+                    className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto"
+                    F
+                    onClick={() => {
+                      setOpenURL(false);
+                      if (url !== "") {
+                        setAddImageUrl(url);
+                        setImageUrl(url);
+                      }
+                    }}
                   >
                     Add
                   </button>
@@ -71,5 +92,5 @@ export default function AddURLModal({openURL, setOpenURL, setAddImageUrl, setIma
         </div>
       </Dialog>
     </Transition.Root>
-  )
+  );
 }

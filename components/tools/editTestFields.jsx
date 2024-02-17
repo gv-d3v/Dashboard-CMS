@@ -1,5 +1,4 @@
 export function EditTestFields(setError, validateEmail, validatePassword, currentUser, name, email, password, passwordConfirm) {
-
   if (currentUser?.email == email) {
     if (!name && email && password && passwordConfirm) {
       setError("Please fill out full name field");
