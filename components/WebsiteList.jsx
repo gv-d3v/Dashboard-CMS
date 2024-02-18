@@ -52,9 +52,9 @@ const WebsiteList = () => {
                   </span>
                   <span className="website-type">{website.hostType}</span>
                 </div>
-                <button className="manage-button">
-                  <Link href={`./websites/${website.id}`}>Manage</Link>
-                </button>
+                <Link href={`./websites/${website.id}`} id="manage-button">
+                  <button className="manage-button">Manage</button>
+                </Link>
               </li>
               {website.id < websiteList.length ? <hr className="line-break" /> : null}
             </div>

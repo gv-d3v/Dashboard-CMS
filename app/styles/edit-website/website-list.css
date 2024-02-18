@@ -38,7 +38,7 @@
   color: rgba(0, 0, 0, 0.7);
 }
 
-.manage-button {
+#manage-button {
   margin-left: auto;
   background-color: rgb(31, 41, 55);
   color: rgb(209, 213, 219);
@@ -50,7 +50,7 @@
   margin-bottom: auto;
 }
 
-.manage-button:hover {
+#manage-button:hover {
   opacity: 0.9;
 }
 

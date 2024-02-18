@@ -1,5 +1,7 @@
 export const GetUsers = async () => {
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "..";
+
+  //const production = '..'
 
   try {
     const resUserExists = await fetch(`${apiBaseUrl}/api/userShow`, {
@@ -18,6 +20,7 @@ export const GetUsers = async () => {
     return data.user || [];
   } catch (error) {
     console.error("Error fetching user data:", error);
+    //console.log(apiBaseUrl)
     return [];
   }
 };
