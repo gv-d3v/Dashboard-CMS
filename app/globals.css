@@ -1,11 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "./styles/loading.css";
-@import "./styles/dasboardMenu.css";
-@import "./styles/onlineUser.css";
-@import "./styles/formLayout.css";
-@import "./styles/shadowing.css";
+@import "./styles/_styles.css";
 
 input {
   @apply border border-gray-200 py-2 px-6 bg-zinc-100/40;

@@ -1,16 +1,17 @@
 .activeBorder {
-  outline: 3px solid rgb(34, 197, 94);
-  animation: border-pulsate 3s infinite;
+    outline: 3px solid rgb(34, 197, 94);
+    animation: border-pulsate 3s infinite;
 }
 
 @keyframes border-pulsate {
-  0% {
-    outline-color: rgba(34, 197, 94, 8);
-  }
-  50% {
-    outline-color: rgba(34, 197, 94, 0);
-  }
-  100% {
-    outline-color: rgba(34, 197, 94, 8);
-  }
+    0% {
+        outline-color: rgba(34, 197, 94, 8);
+    }
+    50% {
+        outline-color: rgba(34, 197, 94, 0);
+    }
+    100% {
+        outline-color: rgba(34, 197, 94, 8);
+    }
 }
+

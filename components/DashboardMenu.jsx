@@ -10,7 +10,7 @@ const menu = [
     description: "",
     imageSrc: "/website.png",
     imageAlt: "Edit Website option.",
-    href: "#",
+    href: "dashboard/websites",
     height: 50,
     width: 50,
   },

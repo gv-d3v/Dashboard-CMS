@@ -1,8 +1,8 @@
-let people = [];
-
 export const GetUsers = async () => {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   try {
-    const resUserExists = await fetch("../api/userShow", {
+    const resUserExists = await fetch(`${apiBaseUrl}/api/userShow`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -10,12 +10,14 @@ export const GetUsers = async () => {
       cache: "no-store",
     });
 
-    const { user } = await resUserExists.json();
+    if (!resUserExists.ok) {
+      throw new Error(`Failed to fetch user data: ${resUserExists.status}`);
+    }
 
-    people = [];
-    people.push(...user);
-    return people;
+    const data = await resUserExists.json();
+    return data.user || [];
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching user data:", error);
+    return [];
   }
 };

@@ -1,13 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import EditModal from "./modals/EditModal";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { signOut, useSession } from "next-auth/react";
+
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { GetUsers } from "@/app/calls/GetUsers";
+import EditModal from "./modals/EditModal";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
@@ -25,8 +26,8 @@ function classNames(...classes) {
 
 export default function NavBar() {
   let people = [];
-
   const { data: session } = useSession();
+
   const pathname = usePathname();
 
   const [sessionImage, setSessionImage] = useState("/user.png");

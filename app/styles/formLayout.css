@@ -1,33 +1,33 @@
 .AdminLogin {
-  font-size: 23px;
-  text-align: center;
+    font-size: 23px;
+    text-align: center;
 }
 
 .regForm input {
-  width: auto;
+    width: auto;
 }
 
 .formSelect {
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity));
-  background-color: rgb(244 244 245 / 0.4);
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+    border-width: 1px;
+    --tw-border-opacity: 1;
+    border-color: rgb(229 231 235 / var(--tw-border-opacity));
+    background-color: rgb(244 244 245 / 0.4);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .formSelect option {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 17px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 17px;
 }
 
 .formSelect .defaultOption {
-  opacity: 1; /* 1 */
-  color: #9ca3af; /* 2 */
+    opacity: 1; /* 1 */
+    color: #9ca3af; /* 2 */
 }
 
 .formSelect .otherOptions {
-  color: black;
+    color: black;
 }

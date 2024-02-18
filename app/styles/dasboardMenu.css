@@ -26,3 +26,20 @@
   width: 200px;
   text-align: center;
 }
+
+@media screen and (max-width: 1370px) and (min-width: 1023px) {
+  .centeredMenu {
+    width: 180px;
+    top: 79%;
+    border-radius: 12px;
+  }
+  
+.centeredMenu h1 {
+    color: white;
+    font-size: 1.1rem;
+  }
+  .imageMenu {
+    width: 180px;
+    top: 50%;
+  }
+}

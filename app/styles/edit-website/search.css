@@ -1,0 +1,24 @@
+.search-website {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-website input {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: 100%;
+}
+
+.search-website input:focus,
+.search-website input:focus-visible {
+  border: none;
+  box-shadow: none;
+  outline-color: none;
+}
