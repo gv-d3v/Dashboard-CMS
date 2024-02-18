@@ -20,7 +20,6 @@ export const GetUsers = async () => {
     return data.user || [];
   } catch (error) {
     console.error("Error fetching user data:", error);
-    //console.log(apiBaseUrl)
     return [];
   }
 };

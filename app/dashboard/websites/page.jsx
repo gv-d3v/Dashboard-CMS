@@ -1,8 +1,10 @@
+"use client"
 import SearchBar from "@/components/SearchBar";
 import WebsiteList from "@/components/WebsiteList";
-import React from "react";
+import React, { useState } from "react";
 
 const Websites = () => {
+  const [websites, setWebsites] = useState([]);
   return (
     <div className="min-h-full">
       <header className="bg-white shadow">
@@ -14,8 +16,8 @@ const Websites = () => {
         <div className="bg-gray-100 h-auto">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl py-4 sm:py-4 lg:max-w-none lg:py-4">
-              <SearchBar />
-              <WebsiteList />
+              <SearchBar setWebsites={setWebsites}/>
+              <WebsiteList websites={websites}/>
             </div>
           </div>
         </div>
