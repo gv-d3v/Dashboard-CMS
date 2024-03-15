@@ -17,7 +17,9 @@ export const GetUsers = async () => {
     }
 
     const data = await resUserExists.json();
+    
     return data.user || [];
+   
   } catch (error) {
     console.error("Error fetching user data:", error);
     return [];

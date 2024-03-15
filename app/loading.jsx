@@ -1,8 +1,13 @@
 import React from 'react';
 
-export default function Loading() {
+export default function Loading({ml,mt}) {
     return (
-        <div className='lds-spinner'>
+        <div 
+        style={{
+            marginLeft: ml ? ml : undefined,
+            marginTop: mt ? mt : undefined,
+          }}
+        className={`lds-spinner`}>
             <div></div>
             <div></div>
             <div></div>

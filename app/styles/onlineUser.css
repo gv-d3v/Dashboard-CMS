@@ -15,3 +15,14 @@
     }
 }
 
+.profile{
+    display: grid;
+    /*background-color: var(--dark);*/
+    padding: 20px 0px;
+    border-radius: 10px;
+}
+
+.profile span{
+    /*color: white;*/
+    line-height: 30px
+}

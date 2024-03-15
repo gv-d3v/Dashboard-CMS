@@ -1,3 +1,7 @@
 @import "./search.css";
 @import "./website-list.css";
-@import "./side-bar.css"
+@import './website.css';
+@import "./side-bar.css";
+@import "./add-accommodation.css";
+
+@import "./side-bar-tabs/_side-bar-tabs.css"

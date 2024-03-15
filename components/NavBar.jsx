@@ -6,9 +6,12 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { signOut, useSession } from "next-auth/react";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { GetUsers } from "@/app/calls/GetUsers";
+import ProfileModal from "./modals/ProfileModal";
+import handleScroll from "./tools/handleScroll";
 import EditModal from "./modals/EditModal";
+import checkPath from "./tools/checkPath";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
@@ -25,55 +28,51 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-  let people = [];
-  const { data: session } = useSession();
-
   const pathname = usePathname();
 
+  let people = [];
+  const { data: session } = useSession();
+  const currentUser = session?.user;
+  const [profile, setProfile] = useState("");
   const [sessionImage, setSessionImage] = useState("/user.png");
-  const [currentUser, setCurrentUser] = useState("");
-  const [openEdit, setOpenEdit] = useState(false);
-  const [editPerson, setEditPerson] = useState("");
 
-  const Users = async () => {
+  const [openProfile, setOpenProfile] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+
+  const [enableScroll, setEnableScroll] = useState(false);
+  const [navS, setnavS] = useState("");
+
+  const getUser = async () => {
     const data = await GetUsers();
-    people = [];
     people.push(...data);
     people.forEach(e => {
-      if (e.email === session?.user?.email) {
+      if (e.email === currentUser.email) {
         setSessionImage(e.imageUrl);
-        setCurrentUser(e._id);
+        setProfile(e);
       }
     });
   };
+
+  //OPEN PROFILE
+  const profileSettings = () => {
+    setOpenProfile(true);
+  };
+
+  handleScroll(158, setnavS, "nav-scroll", "", enableScroll);
 
   useEffect(() => {
     if (session) {
       if (sessionImage === "/user.png") {
-        Users();
+        getUser();
       }
     }
+    checkPath(pathname, setEnableScroll);
   });
-
-  //EDIT USER
-  const editUser = async _id => {
-    people.map(person => {
-      if (person._id === _id) {
-        setEditPerson(person);
-        setOpenEdit(true);
-      }
-    });
-  };
-
-  const profileSettings = () => {
-    setOpenEdit(true);
-    editUser(currentUser);
-  };
 
   return session ? (
     <Disclosure
       as="nav"
-      className="bg-gray-800"
+      className={`bg-gray-800 navbar-main z-20 ${navS}`}
     >
       {({ open }) => (
         <>
@@ -121,90 +120,109 @@ export default function NavBar() {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <p>{session?.user?.name}</p>
-                </button>
-
-                {/* Profile dropdown */}
-                <Menu
-                  as="div"
-                  className="relative ml-3"
-                >
-                  <div>
-                    <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className={`h-8 w-8 rounded-full bg-white`}
-                        src={session?.user ? sessionImage : "/user.png"}
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
+              {!navS ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <button
+                    type="button"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="javascript:void(0)"
-                            onClick={() => {
-                              {
-                                profileSettings();
-                              }
-                            }}
-                            className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700 dropMenu")}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="javascript:void(0)"
-                            className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="javascript:void(0)"
-                            onClick={() => signOut()}
-                            className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700 showPointer")}
-                          >
-                            Sign out
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">View notifications</span>
+                    <p>{currentUser.name}</p>
+                  </button>
+
+                  {/* Profile dropdown */}
+                  <Menu
+                    as="div"
+                    className="relative ml-3"
+                  >
+                    <div>
+                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                          className={`h-8 w-8 rounded-full bg-white`}
+                          src={session?.user ? sessionImage : "/user.png"}
+                          alt=""
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              onClick={() => {
+                                {
+                                  profileSettings();
+                                }
+                              }}
+                              className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700 dropMenu")}
+                            >
+                              Your Profile
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}
+                            >
+                              Settings
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              onClick={() => signOut()}
+                              className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700 showPointer")}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
+              ) : (
+                <button
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  onClick={() => setnavS("")}
+                >
+                  Menu
+                </button>
+              )}
             </div>
           </div>
+          <ProfileModal
+            openProfile={openProfile}
+            setOpenProfile={setOpenProfile}
+            profile={profile}
+            fromnavbar={true}
+            setOpenEdit={setOpenEdit}
+          />
+
           <EditModal
             openEdit={openEdit}
             setOpenEdit={setOpenEdit}
-            editPerson={editPerson}
+            editPerson={profile}
             people={people}
+            fetchData={getUser}
           />
+
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map(item => (

@@ -1,0 +1,9 @@
+.nav-scroll div div div div div {
+  display: none;
+}
+
+.header-scroll,
+.nav-scroll {
+  width: 200px !important;
+  transition: width 0.3s ease;
+}

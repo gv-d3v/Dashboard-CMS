@@ -71,10 +71,10 @@ export default function DashboardMenu() {
         </div>
       </header>
       <main>
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 h-screen">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl py-4 sm:py-4 lg:max-w-none lg:py-11">
-              <div className="lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
+              <div className="lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 menu-pos">
                 {menu.map((menuItem, index) => (
                   <div
                     key={index}

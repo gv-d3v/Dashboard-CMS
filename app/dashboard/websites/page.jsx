@@ -1,11 +1,35 @@
-"use client"
+"use client";
+import { GetWebsites } from "@/app/calls/GetWebsites";
+import Loading from "@/app/loading";
 import SearchBar from "@/components/SearchBar";
 import WebsiteList from "@/components/WebsiteList";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Websites = () => {
-  const [websites, setWebsites] = useState([]);
-  return (
+  const [allWebsites, setAllWebsites] = useState([]);
+  const [filteredWebsites, setFilteredWebsites] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  //GET USERS
+  const fetchData = async () => {
+    const data = await GetWebsites();
+    setAllWebsites(data);
+    setIsLoading(false);
+  };
+
+  //GET USERS ON LOAD
+  useEffect(() => {
+    const fetchDataAndSetLoading = async () => {
+      await fetchData();
+    };
+
+    fetchDataAndSetLoading();
+  }, []);
+
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="min-h-full">
       <header className="bg-white shadow">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -13,11 +37,16 @@ const Websites = () => {
         </div>
       </header>
       <main>
-        <div className="bg-gray-100 h-auto">
+        <div className="bg-gray-100 h-screen">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl py-4 sm:py-4 lg:max-w-none lg:py-4">
-              <SearchBar setWebsites={setWebsites}/>
-              <WebsiteList websites={websites}/>
+              <SearchBar
+                setItems={setFilteredWebsites}
+                items={allWebsites}
+                placeholder={"website"}
+                classAtt={"search-website"}
+              />
+              <WebsiteList websites={filteredWebsites} />
             </div>
           </div>
         </div>

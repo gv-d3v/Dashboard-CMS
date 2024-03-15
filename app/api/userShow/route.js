@@ -1,6 +1,5 @@
 import { connectMongoDB } from '@/lib/mongodb';
 import User from '@/models/user';
-import { revalidateTag } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 export async function GET(req, res) {

@@ -1,20 +1,39 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Space from "./Space";
 
 export default function LoginForm() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const [error, setError] = useState("");
 
   const router = useRouter();
 
+  useEffect(() => {
+    // Check if the input fields are already populated on page load
+    const emailField = document.querySelector("#emailInput");
+    const passwordField = document.querySelector("#passInput");
+
+    if (emailField && emailField.value) {
+      setEmail(emailField.value.toLowerCase().replace(/\s+$/, ""));
+    }
+
+    if (passwordField && passwordField.value) {
+      setPassword(passwordField.value);
+    }
+  }, []);
+
   const handleSubmit = async e => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setError("Please fill out all fields");
+      return;
+    }
 
     try {
       const res = await signIn("credentials", {
@@ -22,22 +41,12 @@ export default function LoginForm() {
         password,
         redirect: false,
       });
-      if (!email && !password) {
-        setError("Please fill out all fields");
-        return;
-      }
-      if (!email) {
-        setError("Email field is empty");
-        return;
-      }
-      if (!password) {
-        setError("Password field is empty");
-        return;
-      }
+
       if (res.error) {
-        setError("Incorect credentials");
+        setError("Incorrect credentials");
         return;
       }
+
       router.replace("dashboard");
     } catch (error) {
       console.log(error);
@@ -45,7 +54,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="grid place-items-center h-screen">
+    <div className="grid place-items-center h-screen login-main">
       <div className="shadow-lg p-10 rounded-lg border-y-4 border-gray-800">
         <h1 className="text-xl font-bold pb-10 AdminLogin">Dashboard login:</h1>
 
@@ -54,6 +63,7 @@ export default function LoginForm() {
           className="flex flex-col gap-3"
         >
           <input
+            id="emailInput"
             onChange={e => {
               setEmail(e.target.value.toLowerCase().replace(/\s+$/, ""));
               setError("");
@@ -61,8 +71,10 @@ export default function LoginForm() {
             type="text"
             placeholder="Email"
             className="md:w-96"
+            value={email}
           />
           <input
+            id="passInput"
             onChange={e => {
               setPassword(e.target.value);
               setError("");

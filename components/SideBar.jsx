@@ -1,6 +1,7 @@
 import FTPSVG from "@/app/styles/icons/FTPSVG";
 import ManageSVG from "@/app/styles/icons/ManageSVG";
 import MediaSVG from "@/app/styles/icons/MediaSVG";
+import SettingsSVG from "@/app/styles/icons/SettingsSVG";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -41,7 +42,19 @@ export default function SideBar({ tab, setTab }) {
         >
           {/* <Link href={`./${id}/ftp`}>FTP</Link> */}
           <button>
-            <FTPSVG />FTP
+            <FTPSVG />
+            FTP
+          </button>
+        </li>
+        <li
+          className={`${tab === 3 ? "active" : ""}`}
+          onClick={() => setTab(3)}
+       
+        >
+          {/* <Link href={`./${id}/ftp`}>FTP</Link> */}
+          <button>
+            <SettingsSVG />
+            Settings
           </button>
         </li>
       </ul>

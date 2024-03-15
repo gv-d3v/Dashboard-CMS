@@ -1,4 +1,23 @@
 :root {
   --dark: rgb(31, 41, 55);
+  --dark-hover: rgba(31, 41, 55, 0.9);
   --text: rgb(209, 213, 219);
+}
+
+.bg-yellow-400 {
+  background-color: rgba(250, 204, 21, 0.9) !important;
+  color: white !important;
+}
+
+.bg-yellow-400:hover {
+  background-color: rgba(250, 204, 21, 1) !important;
+  color: white !important;
+}
+
+.bg-red-600 {
+  background-color: rgb(220 38 38);
+}
+
+.bg-red-600:hover {
+  background-color: rgb(233, 23, 23) !important;
 }

@@ -1,17 +1,17 @@
 "use client";
-import { websiteListDB } from "@/db/WebsiteListDB";
 import React, { useEffect, useState } from "react";
 
-const SearchBar = ({ setWebsites }) => {
+const SearchBar = ({ setItems, items, placeholder, classAtt }) => {
   const [searchInput, setSearchInput] = useState("");
 
   const handleSearch = () => {
-    let filteredWebsites = [...websiteListDB];
+    let filteredItems = [...items];
 
     if (searchInput) {
-      filteredWebsites = filteredWebsites.filter(website => website.name.toLowerCase().includes(searchInput.toLowerCase()));
+      filteredItems = filteredItems.filter(item => item.name.toLowerCase().includes(searchInput.toLowerCase()));
     }
-    setWebsites(filteredWebsites);
+
+    setItems(filteredItems);
   };
 
   useEffect(() => {
@@ -19,13 +19,13 @@ const SearchBar = ({ setWebsites }) => {
   }, [searchInput]);
 
   return (
-    <div className="search-website">
+    <div className={`search ${classAtt}`}>
       <input
         type="text"
         name="search"
         id="search"
         className=""
-        placeholder="Search for a webiste"
+        placeholder={`Search for a ${placeholder}`}
         onChange={e => setSearchInput(e.target.value)}
       />
     </div>

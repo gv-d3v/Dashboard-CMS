@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./Providers";
 import NavBar from "@/components/NavBar";
+import Space from "@/components/Space";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <AuthProvider>
           <NavBar />
+          <Space space={"4rem"}/>
           {children}
         </AuthProvider>
       </body>

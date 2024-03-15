@@ -1,0 +1,102 @@
+.accommodation-form-position {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.accommodation-field-position {
+  display: flex;
+}
+
+.input-margin {
+  margin-right: 10px;
+}
+
+.accommodation-modal {
+  width: 80%;
+}
+
+.accommodationForm {
+  margin-left: auto;
+}
+
+.accommodationForm textarea {
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
+  background-color: rgb(244 244 245 / 0.4);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/*DROPDOWN*/
+.dropdown-menu {
+  position: absolute;
+  top: 126px;
+  right: 5px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: auto;
+  padding: 10px 5px 10px 5px;
+  background-color: white;
+  font-size: 14px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  animation: fadeInAnimation ease 0.2s;
+  z-index: 1;
+}
+
+.dropdown-menu.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.dropdown-menu ul li {
+  padding: 3px 15px;
+  border-radius: 20px;
+}
+.dropdown-menu ul li:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dropdown-menu.destination {
+  right: auto;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.dropdown-menu.destination.list {
+  width: 300px;
+  max-height: 200px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/*ADD IMAGES*/
+.add-images {
+  width: 100%;
+  background-color: rgb(244 244 245 / 0.4);
+  height: 150px;
+  padding: 20px;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+
+.add-images img {
+  height: 100%;
+  margin: 0px auto;
+}
