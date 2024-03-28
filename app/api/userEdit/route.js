@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 
 export async function POST(req) {
     try {
-        const { _id, name, email, password, imageUrl, role } = await req.json();
+        const { _id, name, email, password, images, role } = await req.json();
         
         await connectMongoDB();
 
@@ -13,7 +13,7 @@ export async function POST(req) {
             $set: {
                 name,
                 email,
-                imageUrl,
+                images,
                 role,
             },
         };

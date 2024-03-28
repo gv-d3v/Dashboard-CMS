@@ -7,12 +7,18 @@
   display: flex;
 }
 
+.accommodation-field-position input {
+  width: 33.4%;
+}
+
 .input-margin {
   margin-right: 10px;
 }
 
 .accommodation-modal {
-  width: 80%;
+  width: auto;
+  padding: 10px 40px 0px 40px;
+  max-width: 99%;
 }
 
 .accommodationForm {
@@ -89,14 +95,33 @@
 .add-images {
   width: 100%;
   background-color: rgb(244 244 245 / 0.4);
-  height: 150px;
-  padding: 20px;
+  min-height: 150px;
+  padding: 10px;
   border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+  display: grid;
 }
 
-.add-images img {
-  height: 100%;
+.added-images {
+  width: 100%;
+  display: flex;
+}
+.possition-images {
+  margin: 10px auto;
+}
+
+.added-images img {
+  padding: 5px;
+  max-height: 155px;
+}
+
+.add-image-button {
+  height: 110px;
   margin: 0px auto;
+  cursor: pointer;
+}
+
+.added-images-num {
+  margin: 0 auto;
 }

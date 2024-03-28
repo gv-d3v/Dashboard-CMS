@@ -2,21 +2,27 @@
 
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import PrepareUpload from "../prepareUpload";
 
-export default function AddURLModal({ openURL, setOpenURL, imageUrl, setAddImageUrl, setImageUrl }) {
+export default function AddURLModal({ openURLModal, setOpenURLModal, addImageUrl, setAddImageUrl, setImageUrl, file, setFile }) {
   const [url, setUrl] = useState("");
+  const uploadRef = useRef(null);
   const cancelButtonRef = useRef(null);
+
+  const handleUploadButton = () => {
+    uploadRef.current.click();
+  };
 
   return (
     <Transition.Root
-      show={openURL}
+      show={openURLModal}
       as={Fragment}
     >
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={setOpenURL}
+        onClose={setOpenURLModal}
       >
         <Transition.Child
           as={Fragment}
@@ -67,23 +73,27 @@ export default function AddURLModal({ openURL, setOpenURL, imageUrl, setAddImage
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto"
                     onClick={() => {
-                      setOpenURL(false);
+                      setOpenURLModal(false);
                       if (url !== "") {
-                        setAddImageUrl(url);
-                        setImageUrl(url);
+                        setTimeout(() => {
+                          setImageUrl(url);
+                          setAddImageUrl(url);
+                        }, 200);
                       }
                     }}
                   >
-                    Add
+                    {addImageUrl !== "/user.png" && addImageUrl !== "/addImage.png" ? "Change" : "Add"}
                   </button>
-                  {imageUrl !== "/user.png" ? (
+                  {addImageUrl !== "/user.png" && addImageUrl !== "/addImage.png" ? (
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                       onClick={() => {
-                        setOpenURL(false);
-                        setAddImageUrl("/user.png");
+                        setOpenURLModal(false);
+                        setAddImageUrl("/addImage.png");
                         setImageUrl("/user.png");
+                        setFile(null);
+                        localStorage.removeItem("userImagePreview");
                       }}
                     >
                       Remove image
@@ -92,10 +102,24 @@ export default function AddURLModal({ openURL, setOpenURL, imageUrl, setAddImage
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setOpenURL(false)}
+                    onClick={() => setOpenURLModal(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto mr-auto"
+                    onClick={handleUploadButton}
+                  >
+                    <PrepareUpload
+                      uploadRef={uploadRef}
+                      setAddImageUrl={setAddImageUrl}
+                      setOpenURLModal={setOpenURLModal}
+                      file={file}
+                      setFile={setFile}
+                    />
+                    Upload
                   </button>
                 </div>
               </Dialog.Panel>

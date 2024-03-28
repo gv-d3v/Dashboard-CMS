@@ -6,6 +6,10 @@ const accommodationSchema = new Schema(
       type: String,
       required: true,
     },
+    accommId: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -39,7 +43,7 @@ const accommodationSchema = new Schema(
       required: true,
     },
     images: {
-      type: String,
+      type: Array,
       required: false,
     },
   },

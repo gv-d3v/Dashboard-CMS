@@ -8,10 +8,17 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GetUsers } from "@/app/calls/GetUsers";
-import ProfileModal from "./modals/ProfileModal";
-import handleScroll from "./tools/handleScroll";
-import EditModal from "./modals/EditModal";
-import checkPath from "./tools/checkPath";
+import handleScroll from "@/tools/handleScroll";
+import checkPath from "@/tools/checkPath";
+import dynamic from "next/dynamic";
+
+const DynamicProfileModal = dynamic(() => import("./modals/ProfileModal"), {
+  ssr: false,
+});
+
+const DynamicEditModall = dynamic(() => import("./modals/EditModal"), {
+  ssr: false,
+});
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
@@ -29,6 +36,7 @@ function classNames(...classes) {
 
 export default function NavBar() {
   const pathname = usePathname();
+  const [componentsLoad, setComponentsLoad] = useState(false);
 
   let people = [];
   const { data: session } = useSession();
@@ -47,7 +55,7 @@ export default function NavBar() {
     people.push(...data);
     people.forEach(e => {
       if (e.email === currentUser.email) {
-        setSessionImage(e.imageUrl);
+        setSessionImage(e.images);
         setProfile(e);
       }
     });
@@ -67,6 +75,10 @@ export default function NavBar() {
       }
     }
     checkPath(pathname, setEnableScroll);
+
+    setTimeout(() => {
+      setComponentsLoad(true);
+    }, 1000);
   });
 
   return session ? (
@@ -207,21 +219,26 @@ export default function NavBar() {
               )}
             </div>
           </div>
-          <ProfileModal
-            openProfile={openProfile}
-            setOpenProfile={setOpenProfile}
-            profile={profile}
-            fromnavbar={true}
-            setOpenEdit={setOpenEdit}
-          />
 
-          <EditModal
-            openEdit={openEdit}
-            setOpenEdit={setOpenEdit}
-            editPerson={profile}
-            people={people}
-            fetchData={getUser}
-          />
+          {(componentsLoad || openProfile) && (
+            <DynamicProfileModal
+              openProfile={openProfile}
+              setOpenProfile={setOpenProfile}
+              profile={profile}
+              fromnavbar={true}
+              setOpenEdit={setOpenEdit}
+            />
+          )}
+
+          {(componentsLoad || openEdit) && (
+            <DynamicEditModall
+              openEdit={openEdit}
+              setOpenEdit={setOpenEdit}
+              editPerson={profile}
+              people={people}
+              fetchData={getUser}
+            />
+          )}
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">

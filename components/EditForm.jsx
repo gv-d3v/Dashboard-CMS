@@ -1,37 +1,40 @@
 "use client";
+//add full refresh after edit
 
 import React, { useRef } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AddURLModal from "./modals/AddURLModal";
 import { useSession } from "next-auth/react";
-import { validateEmail } from "./tools/validateEmail";
-import { validatePassword } from "./tools/validatePassword";
-import { EditTestFields } from "./tools/editTestFields";
+import { EditTestFields } from "@/tools/editTestFields";
+import handleUpload from "./handleUpload";
+import Loading from "@/app/loading";
 
-export default function EditForm({ setOpenEdit, cancelButtonRef, editPerson, people, fetchData }) {
+export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, people, editPerson }) {
   const router = useRouter();
   const { data: session } = useSession();
-  const currentUser = session?.user;
 
+  const currentUser = session?.user;
   const Administrator = "Administrator";
 
   const _id = editPerson._id;
   const origEmail = editPerson.email;
-  const refE = useRef(null);
+  const refForm = useRef(null);
+
+  const userId = editPerson.userId;
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState(editPerson.name);
   const [email, setEmail] = useState(editPerson.email);
-
   const [changePassword, setChangePassword] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordConfirm, setConfirmPassword] = useState("");
-
   const [role, setRole] = useState(editPerson.role);
+  const [imageUrl, setImageUrl] = useState(editPerson.images);
 
-  const [openURL, setOpenURL] = useState(false);
-  const [imageUrl, setImageUrl] = useState(editPerson.imageUrl);
-  const [addImage, setAddImage] = useState(editPerson.imageUrl !== "/user.png" ? editPerson.imageUrl : "/addImage.png");
+  const [openURLModal, setOpenURLModal] = useState(false);
+  const [addImageUrl, setAddImageUrl] = useState(editPerson.images);
 
   const [error, setError] = useState("");
 
@@ -67,12 +70,16 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, editPerson, peo
     userExists();
 
     //TEST FIELDS
-    if (!EditTestFields(setError, validateEmail, validatePassword, currentUser, name, email, password, passwordConfirm)) {
+    if (!EditTestFields(setError, currentUser, name, email, password, passwordConfirm)) {
       return;
     }
 
+    setLoading(true);
+
+    const images = file ? await handleUpload({ userId, name, file }) : imageUrl;
+
     //API EDIT
-    const res = await fetch("../api/userEdit", {
+    const res = await fetch("/api/userEdit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,24 +89,26 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, editPerson, peo
         name,
         email,
         password,
-        imageUrl,
+        images,
         role,
       }),
     });
 
     if (res.ok) {
-      refreshEdit();
+      refreshAfterEdit();
     } else {
+      setLoading(false);
       console.log("User does not exists, but registration failed!");
     }
   };
 
-  const refreshEdit = () => {
-    const form = refE.current;
-    form.reset();
+  const refreshAfterEdit = () => {
     setOpenEdit(false);
+    const form = refForm.current;
     fetchData();
     setTimeout(() => {
+      form.reset();
+      setLoading(false);
       router.refresh();
     }, 500);
   };
@@ -109,9 +118,9 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, editPerson, peo
       <div className="grid place-items-center addImage my-auto  ml-auto mr-4 w-full">
         <img
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
-          src={addImage}
+          src={addImageUrl !== "/user.png" ? addImageUrl : "/addImage.png"}
           alt="Add Image"
-          onClick={() => setOpenURL(true)}
+          onClick={() => setOpenURLModal(true)}
         />
       </div>
 
@@ -120,7 +129,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, editPerson, peo
           <form
             onSubmit={handleSubmit}
             className="flex flex-col gap-3 regForm"
-            ref={refE}
+            ref={refForm}
           >
             <input
               type="text"
@@ -235,12 +244,16 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, editPerson, peo
         </div>
       </div>
       <AddURLModal
-        openURL={openURL}
-        setOpenURL={setOpenURL}
-        imageUrl={imageUrl}
-        setAddImageUrl={setAddImage}
+        openURLModal={openURLModal}
+        setOpenURLModal={setOpenURLModal}
+        addImageUrl={addImageUrl}
+        setAddImageUrl={setAddImageUrl}
         setImageUrl={setImageUrl}
+        file={file}
+        setFile={setFile}
       />
+
+      {loading ? <Loading /> : null}
     </div>
   );
 }

@@ -1,10 +1,6 @@
 export const GetUsers = async () => {
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "..";
-
-  //const production = '..'
-
   try {
-    const resUserExists = await fetch(`${apiBaseUrl}/api/userShow`, {
+    const resUserExists = await fetch(`/api/userShow`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -17,9 +13,8 @@ export const GetUsers = async () => {
     }
 
     const data = await resUserExists.json();
-    
+
     return data.user || [];
-   
   } catch (error) {
     console.error("Error fetching user data:", error);
     return [];

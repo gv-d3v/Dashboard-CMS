@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 
 export default function Profile({ setOpenProfile, cancelButtonRef, profile, fromnavbar, setOpenEdit }) {
-  const { name, email, role, imageUrl } = profile;
+  const { name, email, role, images } = profile;
   const joined = new Date(profile.createdAt);
   const currentDate = new Date();
   const difference = currentDate - joined;
@@ -15,7 +15,7 @@ export default function Profile({ setOpenProfile, cancelButtonRef, profile, from
       <div className="grid place-items-center mb-auto mt-auto ml-auto mr-auto">
         <img
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
-          src={imageUrl}
+          src={images}
           alt="Profile Image"
         />
       </div>

@@ -2,20 +2,34 @@
 
 import React, { useEffect, useState } from "react";
 import { UserPlusIcon, PencilSquareIcon, TrashIcon, ArrowPathIcon, UserIcon } from "@heroicons/react/24/outline";
-import DeleteModal from "@/components/modals/DeleteModal";
-import AddModal from "@/components/modals/AddModal";
-import EditModal from "@/components/modals/EditModal";
 import { useRouter } from "next/navigation";
 import { GetUsers } from "@/app/calls/GetUsers";
 import { useSession } from "next-auth/react";
 import Loading from "@/app/loading";
-import ProfileModal from "@/components/modals/ProfileModal";
+import dynamic from "next/dynamic";
+
+const DynamicAddModal = dynamic(() => import("@/components/modals/AddModal"), {
+  ssr: false,
+});
+
+const DynamicEditModal = dynamic(() => import("@/components/modals/EditModal"), {
+  ssr: false,
+});
+
+const DynamicDeleteModal = dynamic(() => import("@/components/modals/DeleteModal"), {
+  ssr: false,
+});
+
+const DynamicProfileModal = dynamic(() => import("@/components/modals/ProfileModal"), {
+  ssr: false,
+});
 
 export default function Team() {
   const { data: session, status } = useSession();
   const currentUser = session?.user;
   const Administrator = "Administrator";
 
+  const [componentsLoad, setComponentsLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const [openAdd, setOpenAdd] = useState(false);
@@ -60,7 +74,7 @@ export default function Team() {
     const _id = userId;
 
     try {
-      const deleteUser = await fetch("../api/userDelete", {
+      const deleteUser = await fetch("/api/userDelete", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -101,6 +115,12 @@ export default function Team() {
     );
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setComponentsLoad(true);
+    }, 1000);
+  }, []);
+
   //GET USERS AND SESSION ROLE ON LOAD
   useEffect(() => {
     if (status === "authenticated") {
@@ -120,7 +140,7 @@ export default function Team() {
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 ">Team</h1>
           </div>
         </header>
-        <main>
+        <main className="mb-10">
           <div className="py-0 md:px-20 lg:px-40">
             <ul
               role="list"
@@ -167,7 +187,7 @@ export default function Team() {
                             ? "h-12 w-12 flex-none rounded-full bg-gray-50 activeBorder"
                             : "h-12 w-12 flex-none rounded-full bg-gray-50"
                         }
-                        src={person.imageUrl ? person.imageUrl : "/user.png"}
+                        src={person.images ? person.images : "/user.png"}
                         alt={`Image of ${person.name}`}
                       />
 
@@ -237,29 +257,38 @@ export default function Team() {
           </div>
         </main>
       </div>
-      <DeleteModal
-        openDelete={openDelete}
-        setOpenDelete={setOpenDelete}
-        deleteUser={deleteUser}
-        setUserId={setUserId}
-      />
-      <AddModal
-        openAdd={openAdd}
-        setOpenAdd={setOpenAdd}
-        fetchData={fetchData}
-      />
-      <EditModal
-        openEdit={openEdit}
-        setOpenEdit={setOpenEdit}
-        editPerson={editPerson}
-        people={people}
-        fetchData={fetchData}
-      />
-      <ProfileModal
-        openProfile={openProfile}
-        setOpenProfile={setOpenProfile}
-        profile={profile}
-      />
+
+      {(componentsLoad || openAdd) && (
+        <DynamicAddModal
+          openAdd={openAdd}
+          setOpenAdd={setOpenAdd}
+          fetchData={fetchData}
+        />
+      )}
+      {(componentsLoad || openEdit) && (
+        <DynamicEditModal
+          openEdit={openEdit}
+          setOpenEdit={setOpenEdit}
+          editPerson={editPerson}
+          people={people}
+          fetchData={fetchData}
+        />
+      )}
+      {(componentsLoad || openDelete) && (
+        <DynamicDeleteModal
+          openDelete={openDelete}
+          setOpenDelete={setOpenDelete}
+          deleteFunction={deleteUser}
+          setObjectId={setUserId}
+        />
+      )}
+      {(componentsLoad || openProfile) && (
+        <DynamicProfileModal
+          openProfile={openProfile}
+          setOpenProfile={setOpenProfile}
+          profile={profile}
+        />
+      )}
     </div>
   );
 }

@@ -3,35 +3,47 @@
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AddURLModal from "./modals/AddURLModal";
-import { validateEmail } from "./tools/validateEmail";
-import { validatePassword } from "./tools/validatePassword";
-import RegisterTestFields from "./tools/registerTestFields";
+import RegisterTestFields from "../tools/registerTestFields";
+import { v4 as uuidv4 } from "uuid";
+import handleUpload from "./handleUpload";
+import dynamic from "next/dynamic";
+import Loading from "@/app/loading";
+
+const DynamicAddURLModal = dynamic(() => import("./modals/AddURLModal"), {
+  ssr: false,
+});
 
 export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData }) {
+  const [file, setFile] = useState(null);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
+  const userId = uuidv4(); // nesto uraditi  sa ovim
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
-  const [error, setError] = useState("");
+
+  const [openURLModal, setOpenURLModal] = useState(false);
   const [imageUrl, setImageUrl] = useState("/user.png");
   const [addImageUrl, setAddImageUrl] = useState("/addImage.png");
-  const [openURL, setOpenURL] = useState(false);
+
+  const [error, setError] = useState("");
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     //TEST FIELDS
-    if (!RegisterTestFields(name, email, role, validateEmail, validatePassword, password, passwordConfirm, setError)) {
+    if (!RegisterTestFields(name, email, role, password, passwordConfirm, setError)) {
       return;
     }
 
+    setLoading(true);
+
     //CHECK IF USER EXISTS
     try {
-      const resUserExists = await fetch("../api/userExists", {
+      const resUserExists = await fetch("/api/userExists", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,29 +60,35 @@ export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData })
         return;
       }
 
+      const images = file ? await handleUpload({ userId, name, file }) : imageUrl;
+
       //REGISTER API
-      const res = await fetch("../api/register", {
+      const res = await fetch("/api/userAdd", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId,
           name,
           email,
           password,
-          imageUrl,
+          images,
           role,
         }),
       });
       if (res.ok) {
-        const form = e.target;
-        form.reset();
         setOpenAdd(false);
+        const form = e.target;
         fetchData();
         setTimeout(() => {
+          form.reset();
+          localStorage.removeItem("userImagePreview");
+          setLoading(false);
           router.refresh();
         }, 500);
       } else {
+        setLoading(false);
         console.log("User does not exists, but registration failed!");
       }
     } catch (error) {
@@ -85,7 +103,7 @@ export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData })
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
           src={addImageUrl}
           alt="Add Image"
-          onClick={() => setOpenURL(true)}
+          onClick={() => setOpenURLModal(true)}
         />
       </div>
 
@@ -177,12 +195,18 @@ export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData })
           </form>
         </div>
       </div>
-      <AddURLModal
-        openURL={openURL}
-        setOpenURL={setOpenURL}
+
+      <DynamicAddURLModal
+        openURLModal={openURLModal}
+        setOpenURLModal={setOpenURLModal}
+        addImageUrl={addImageUrl}
         setAddImageUrl={setAddImageUrl}
         setImageUrl={setImageUrl}
+        file={file}
+        setFile={setFile}
       />
+
+      {loading ? <Loading /> : null}
     </div>
   );
 }

@@ -24,7 +24,7 @@ const WebsiteList = ({ websites }) => {
                     <span className="website-type">{website.hostType}</span>
                   </div>
                   <Link
-                    href={`./websites/${website._id}`}
+                    href={`./websites/${website._id}/manage`}
                     id="manage-button"
                   >
                     <button className="manage-button">Manage</button>

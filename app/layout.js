@@ -3,6 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "./Providers";
 import NavBar from "@/components/NavBar";
 import Space from "@/components/Space";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
           <NavBar />
           <Space space={"4rem"}/>
           {children}
+         
         </AuthProvider>
       </body>
     </html>

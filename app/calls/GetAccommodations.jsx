@@ -1,10 +1,6 @@
 export const GetAccommodations = async () => {
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "..";
-
-  //const production = '..'
-
   try {
-    const resAccommodationExists = await fetch(`${apiBaseUrl}/api/accommodationShow`, {
+    const resAccommodationExists = await fetch(`/api/accommShow`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

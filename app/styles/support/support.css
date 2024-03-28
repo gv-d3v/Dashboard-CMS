@@ -1,0 +1,37 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.group-open .animate-fadeIn {
+  animation: fadeIn 0.2s ease-in-out forwards;
+}
+
+.support-row {
+    width: 100%;
+    display: flex;
+}
+.support-row img{
+    width: 90px;
+    height: 90px;
+    margin-left: 20px;
+}
+
+.support-row p{
+    font-size: 30px;
+    margin: auto 40px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.support-col {
+  width: 50%;
+}
+
+.support-mail{
+    font-size: 25px !important;
+}

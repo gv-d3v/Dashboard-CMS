@@ -4,28 +4,48 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { debounce } from "lodash";
 import countries from "@/db/Countries";
-import LocationDropdown from "./dropdowns/LocationDropdown";
+import AddAccommTestFields from "@/tools/addAccommTestFields";
+import { v4 as uuidv4 } from "uuid";
+import handleUpload from "./handleUpload";
+import Loading from "@/app/loading";
+import dynamic from "next/dynamic";
+
+const DynamicLoadLocationDropdown = dynamic(() => import("./dropdowns/LocationDropdown"), {
+  ssr: false,
+});
+const DynamicLoadPrepareUpload = dynamic(() => import("./prepareUpload"), {
+  ssr: false,
+});
 
 export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData }) {
   const router = useRouter();
-  const {id} = useParams()
+  const { id } = useParams();
+  const websiteId = id;
+  const accommId = uuidv4();
+
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   //Search states and refs
   const destMenuRef = useRef(null);
   const searchRef = useRef(null);
+  const uploadRef = useRef(null);
+
+  const [name, setName] = useState("");
+
   const [popupLeft, setPopupLeft] = useState(0);
   const [destination, setDestination] = useState("");
   const [showDestinationDrop, setShowDestinationDrop] = useState("");
   const [searchedDestination, setSearchedDestination] = useState([]);
 
-  const [websiteId, setWebsiteId] = useState(id);
-  const [name, setName] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [rooms, setRooms] = useState("");
   const [guests, setGuests] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+
+  const [previewImages, setPreviewImages] = useState();
 
   const [error, setError] = useState("");
 
@@ -65,27 +85,40 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
     }
   };
 
-  useEffect(() => {
-    applyFilters();
-    handleWindowResize();
-    window.addEventListener("resize", handleWindowResize);
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, [destination]);
+  const handleUploadButton = () => {
+    uploadRef.current.click();
+  };
+
+  const emptyLocalStorage = () => {
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith("userImagePreview")) {
+        localStorage.removeItem(key);
+      }
+    });
+  };
 
   //SUBMIT
   const handleSubmit = async e => {
     e.preventDefault();
 
+    //TEST FIELDS
+    if (!AddAccommTestFields(name, destination, city, address, rooms, guests, price, description, previewImages, setError)) {
+      return;
+    }
+
+    setLoading(true);
+
+    const images = file ? await handleUpload({ websiteId, accommId, name, file }) : imageUrl;
+
     try {
-      const res = await fetch("/api/addAccommodation", {
+      const res = await fetch("/api/accommAdd", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           websiteId,
+          accommId,
           name,
           destination,
           city,
@@ -94,19 +127,22 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
           guests,
           price,
           description,
+          images: images.photos,
         }),
       });
 
       if (res.ok) {
-        console.log("Success!");
         const form = e.target;
         form.reset();
+        emptyLocalStorage();
         setOpenAdd(false);
         fetchData();
+        setLoading(false);
         setTimeout(() => {
           router.refresh();
         }, 500);
       } else {
+        setLoading(false);
         const errorResponse = await res.json();
         console.error("Error in client-side request:", errorResponse);
       }
@@ -114,6 +150,15 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
       console.error("Error in client-side request:", error);
     }
   };
+
+  useEffect(() => {
+    applyFilters();
+    handleWindowResize();
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [destination]);
 
   return (
     <div className="inline-block p-5 sm:flex md:flex lg:flex">
@@ -192,11 +237,38 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
             }}
           />
 
-          <div className="add-images">
-            <img
-              src="/addImages.png"
-              alt="Add Images Icon"
-            />
+          <div
+            className="add-images"
+            onClick={handleUploadButton}
+          >
+            <div className="added-images">
+              {previewImages ? (
+                previewImages.map((photo, index) => {
+                  return (
+                    <div
+                      key={index + 1}
+                      className="possition-images"
+                    >
+                      <img
+                        src={photo}
+                        alt="Add image"
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="possition-images">
+                  <span>Max size of image 2MB</span>
+                  <img
+                    className="add-image-button"
+                    src={`/addImages.png`}
+                    alt="Add image"
+                  />
+                  <span>Upload up to 6 images</span>
+                </div>
+              )}
+            </div>
+            {previewImages ? <span className="added-images-num">{`${previewImages.length} / 6`}</span> : null}
           </div>
 
           {error && <div className="bg-red-500 text-white w-auto text-sm py-2 px-3 rounded-md mt-0 text-center">{error}</div>}
@@ -204,10 +276,24 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
             <button className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto">
               Add
             </button>
+            {previewImages ? (
+              <button
+                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                onClick={() => {
+                  setPreviewImages("");
+                  emptyLocalStorage();
+                }}
+              >
+                Remove images
+              </button>
+            ) : null}
             <button
               type="button"
               className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-              onClick={() => setOpenAdd(false)}
+              onClick={() => {
+                setOpenAdd(false);
+                emptyLocalStorage();
+              }}
               ref={cancelButtonRef}
             >
               Cancel
@@ -215,7 +301,8 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
           </div>
         </form>
       </div>
-      <LocationDropdown
+
+      <DynamicLoadLocationDropdown
         showDestinationDrop={showDestinationDrop}
         destMenuRef={destMenuRef}
         handleDestinationHide={handleDestinationHide}
@@ -223,6 +310,16 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
         popupLeft={popupLeft}
         searchedDestination={searchedDestination}
       />
+
+      <DynamicLoadPrepareUpload
+        uploadRef={uploadRef}
+        setAddImageUrl={setPreviewImages}
+        file={file}
+        setFile={setFile}
+        mutliple={true}
+      />
+
+      {loading ? <Loading /> : null}
     </div>
   );
 }

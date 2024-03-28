@@ -3,11 +3,9 @@ import ManageSVG from "@/app/styles/icons/ManageSVG";
 import MediaSVG from "@/app/styles/icons/MediaSVG";
 import SettingsSVG from "@/app/styles/icons/SettingsSVG";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import React from "react";
 
-export default function SideBar({ tab, setTab }) {
-  const { id } = useParams();
+export default function SideBar({ id, pathname }) {
+  const startPath = `/dashboard/websites/${id}`;
 
   return (
     <div className="side-bar">
@@ -16,46 +14,36 @@ export default function SideBar({ tab, setTab }) {
         alt="Logo"
       />
       <ul>
-        <li
-          className={tab === 0 ? "active" : ""}
-          onClick={() => setTab(0)}
-        >
-          {/* <Link href={`./${id}`}>Manage</Link> */}
-          <button>
-            {" "}
-            <ManageSVG />
-            Manage
-          </button>
+        <li className={pathname === `${startPath}/manage` ? "active" : ""}>
+          <Link href={`./manage`}>
+            <button>
+              <ManageSVG />
+              Manage
+            </button>
+          </Link>
         </li>
-        <li
-          className={tab === 1 ? "active" : ""}
-          onClick={() => setTab(1)}
-        >
-          {/* <Link href={`./${id}/media`}>Media</Link> */}
-          <button>
-            <MediaSVG /> Media
-          </button>
+        <li className={pathname === `${startPath}/media` ? "active" : ""}>
+          <Link href={`./media`}>
+            <button>
+              <MediaSVG /> Media
+            </button>
+          </Link>
         </li>
-        <li
-          className={tab === 2 ? "active" : ""}
-          onClick={() => setTab(2)}
-        >
-          {/* <Link href={`./${id}/ftp`}>FTP</Link> */}
-          <button>
-            <FTPSVG />
-            FTP
-          </button>
+        <li className={pathname === `${startPath}/ftp` ? "active" : ""}>
+          <Link href={`./ftp`}>
+            <button>
+              <FTPSVG />
+              FTP
+            </button>
+          </Link>
         </li>
-        <li
-          className={`${tab === 3 ? "active" : ""}`}
-          onClick={() => setTab(3)}
-       
-        >
-          {/* <Link href={`./${id}/ftp`}>FTP</Link> */}
-          <button>
-            <SettingsSVG />
-            Settings
-          </button>
+        <li className={`${pathname === `${startPath}/settings` ? "active" : ""}`}>
+          <Link href={`./settings`}>
+            <button>
+              <SettingsSVG />
+              Settings
+            </button>
+          </Link>
         </li>
       </ul>
     </div>

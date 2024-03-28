@@ -1,10 +1,6 @@
 export const GetWebsites = async () => {
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "..";
-  
-    //const production = '..'
-  
     try {
-      const resWebsitesExists = await fetch(`${apiBaseUrl}/api/websitesShow`, {
+      const resWebsitesExists = await fetch(`/api/websitesShow`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
