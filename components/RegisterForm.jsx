@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from "uuid";
 import handleUpload from "./handleUpload";
 import dynamic from "next/dynamic";
 import Loading from "@/app/loading";
+import { auth } from "@/lib/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const DynamicAddURLModal = dynamic(() => import("./modals/AddURLModal"), {
   ssr: false,
@@ -61,6 +63,8 @@ export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData })
       }
 
       const images = file ? await handleUpload({ userId, name, file }) : imageUrl;
+
+      await createUserWithEmailAndPassword(auth, email, password);
 
       //REGISTER API
       const res = await fetch("/api/userAdd", {

@@ -11,22 +11,26 @@ export default function Support() {
     {
       id: 2,
       question: "How secure is the content management dashboard in terms of protecting our website from unauthorized access or data breaches?",
-      answer: "Using NextAuth.js for our dashboard authentication provides robust security measures. NextAuth.js employs industry-standard authentication mechanisms and session management, ensuring secure user access. Additionally, it offers various authentication strategies, including social authentication and email/password, enhancing user convenience without compromising security. By leveraging NextAuth.js, we bolster our dashboard's defenses against unauthorized access and data breaches, offering peace of mind to both users and administrators.",
+      answer:
+        "Using NextAuth.js for our dashboard authentication provides robust security measures. NextAuth.js employs industry-standard authentication mechanisms and session management, ensuring secure user access. Additionally, it offers various authentication strategies, including social authentication and email/password, enhancing user convenience without compromising security. By leveraging NextAuth.js, we bolster our dashboard's defenses against unauthorized access and data breaches, offering peace of mind to both users and administrators.",
     },
     {
       id: 3,
       question: "Are there any tutorials or documentation available to help me navigate the content management dashboard?",
-      answer: "Navigating the content management dashboard is intuitive and straightforward, requiring minimal guidance. Comprehensive tutorials or documentation aren't necessary due to its user-friendly interface. However, should assistance be needed, our support team is readily available to provide prompt help and address any queries or concerns.",
+      answer:
+        "Navigating the content management dashboard is intuitive and straightforward, requiring minimal guidance. Comprehensive tutorials or documentation aren't necessary due to its user-friendly interface. However, should assistance be needed, our support team is readily available to provide prompt help and address any queries or concerns.",
     },
     {
       id: 4,
       question: "Can multiple team members collaborate on editing website content within the dashboard?",
-      answer: "Yes, multiple team members can collaborate on editing website content within the dashboard. The dashboard allows for the addition of team members with varying roles and access levels. This ensures efficient collaboration while maintaining control over who can edit, publish, or manage content. With this capability, teams can work together seamlessly to update and improve website content as needed.",
+      answer:
+        "Yes, multiple team members can collaborate on editing website content within the dashboard. The dashboard allows for the addition of team members with varying roles and access levels. This ensures efficient collaboration while maintaining control over who can edit, publish, or manage content. With this capability, teams can work together seamlessly to update and improve website content as needed.",
     },
     {
       id: 5,
       question: "What support options are available if I encounter any issues or need assistance while using the dashboard?",
-      answer: "We provide comprehensive support options to assist you whenever you encounter issues or need assistance while using the dashboard. Our support team is available 24/7 and can be reached via various channels provided in the contact information below. No matter the issue or query, our dedicated support team is here to help you every step of the way.",
+      answer:
+        "We provide comprehensive support options to assist you whenever you encounter issues or need assistance while using the dashboard. Our support team is available 24/7 and can be reached via various channels provided in the contact information below. No matter the issue or query, our dedicated support team is here to help you every step of the way.",
     },
   ];
 

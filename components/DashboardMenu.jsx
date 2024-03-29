@@ -1,8 +1,14 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { signOut as NextAuthSignOut } from "next-auth/react";
+import { auth } from "@/lib/firebase";
 import Image from "next/image";
 import Link from "next/link";
+
+const handleSignOut = () => {
+  NextAuthSignOut();
+  auth.signOut();
+};
 
 const menu = [
   {
@@ -58,7 +64,7 @@ const menu = [
     href: `#`,
     height: 50,
     width: 50,
-    function: signOut,
+    function: handleSignOut,
   },
 ];
 

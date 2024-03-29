@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useState } from "react";
 
 export default function Profile({ setOpenProfile, cancelButtonRef, profile, fromnavbar, setOpenEdit }) {
   const { name, email, role, images } = profile;

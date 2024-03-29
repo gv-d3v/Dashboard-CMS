@@ -4,6 +4,8 @@
     - Login autocomplete failure - DONE
     - Profile modal - DONE
     - Dynamic next / Lazy load for modals - DONE
+    - Firebase and fire storage auth - DONE
+    - Firabe storage auth restriction - -DONE
 
 -TEAM
     - Password reset for other users

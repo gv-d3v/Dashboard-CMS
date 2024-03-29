@@ -3,6 +3,8 @@
 import { signIn } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -34,6 +36,8 @@ export default function LoginForm() {
       return;
     }
 
+    
+
     try {
       const res = await signIn("credentials", {
         email,
@@ -45,7 +49,7 @@ export default function LoginForm() {
         setError("Incorrect credentials");
         return;
       }
-
+      signInWithEmailAndPassword(auth, email, password)
       router.replace("dashboard");
     } catch (error) {
       console.log(error);

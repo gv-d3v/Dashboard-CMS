@@ -1,16 +1,18 @@
 "use client";
 
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { signOut, useSession } from "next-auth/react";
-
+import { signOut as NextAuthSignOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
+import { auth } from "@/lib/firebase";
+
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
 import { GetUsers } from "@/app/calls/GetUsers";
 import handleScroll from "@/tools/handleScroll";
 import checkPath from "@/tools/checkPath";
-import dynamic from "next/dynamic";
 
 const DynamicProfileModal = dynamic(() => import("./modals/ProfileModal"), {
   ssr: false,
@@ -67,6 +69,11 @@ export default function NavBar() {
   };
 
   handleScroll(158, setnavS, "nav-scroll", "", enableScroll);
+
+  const handleSignOut = () => {
+    NextAuthSignOut();
+    auth.signOut();
+  };
 
   useEffect(() => {
     if (session) {
@@ -198,7 +205,7 @@ export default function NavBar() {
                           {({ active }) => (
                             <a
                               href="#"
-                              onClick={() => signOut()}
+                              onClick={() => handleSignOut()}
                               className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700 showPointer")}
                             >
                               Sign out

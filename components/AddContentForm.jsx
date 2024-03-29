@@ -106,9 +106,9 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
       return;
     }
 
-    setLoading(true);
-
     const images = file ? await handleUpload({ websiteId, accommId, name, file }) : imageUrl;
+
+    setLoading(true);
 
     try {
       const res = await fetch("/api/accommAdd", {
