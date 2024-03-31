@@ -1,11 +1,10 @@
 export const GetAccommodations = async () => {
   try {
-    const resAccommodationExists = await fetch(`/api/accommShow`, {
+    const resAccommodationExists = await fetch(`/api/content/accommShow`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store",
     });
 
     if (!resAccommodationExists.ok) {

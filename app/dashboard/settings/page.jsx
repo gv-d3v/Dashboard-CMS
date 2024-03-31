@@ -1,4 +1,5 @@
 import React from "react";
+import Test from "./test";
 
 export default function Settings() {
   return (
@@ -9,7 +10,9 @@ export default function Settings() {
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 ">Settings</h1>
           </div>
         </header>
-        <main className="mb-10"></main>
+        <main className="mb-10">
+          <Test/>
+        </main>
       </div>
     </div>
   );

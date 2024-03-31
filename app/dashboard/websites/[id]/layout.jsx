@@ -2,7 +2,7 @@
 import { useParams, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { GetWebsites } from "@/app/calls/GetWebsites";
-import SideBar from "@/components/SideBar";
+import SideBar from "@/components/main/SideBar";
 import Space from "@/components/Space";
 import HandleScroll from "@/tools/handleScroll";
 import checkPath from "@/tools/checkPath";

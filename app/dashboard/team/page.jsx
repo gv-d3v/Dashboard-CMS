@@ -8,11 +8,11 @@ import { useSession } from "next-auth/react";
 import Loading from "@/app/loading";
 import dynamic from "next/dynamic";
 
-const DynamicAddModal = dynamic(() => import("@/components/modals/AddModal"), {
+const DynamicAddModal = dynamic(() => import("@/components/modals/users/AddUserModal"), {
   ssr: false,
 });
 
-const DynamicEditModal = dynamic(() => import("@/components/modals/EditModal"), {
+const DynamicEditModal = dynamic(() => import("@/components/modals/users/EditUserModal"), {
   ssr: false,
 });
 
@@ -20,7 +20,7 @@ const DynamicDeleteModal = dynamic(() => import("@/components/modals/DeleteModal
   ssr: false,
 });
 
-const DynamicProfileModal = dynamic(() => import("@/components/modals/ProfileModal"), {
+const DynamicProfileModal = dynamic(() => import("@/components/modals/users/UserProfileModal"), {
   ssr: false,
 });
 
@@ -38,6 +38,7 @@ export default function Team() {
 
   const [people, setPeople] = useState([]);
   const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   const [editPerson, setEditPerson] = useState("");
 
@@ -69,12 +70,35 @@ export default function Team() {
     });
   };
 
-  //DELETE USER
+  //DELETE USER FB
+  const deleteFireUser = (email) => {
+    fetch("/api/fb/fireUsersDelete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+
+      .catch(error => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  };
+
+  //DELETE USER DB
   const deleteUser = async () => {
     const _id = userId;
 
     try {
-      const deleteUser = await fetch("/api/userDelete", {
+      const deleteUser = await fetch("/api/team/userDelete", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -87,6 +111,7 @@ export default function Team() {
       const result = await deleteUser.json();
 
       if (result === true) {
+        deleteFireUser(userEmail)
         fetchData();
         setTimeout(() => {
           setUserId("");
@@ -231,6 +256,7 @@ export default function Team() {
                             onClick={e => {
                               setOpenDelete(true);
                               setUserId(person._id);
+                              setUserEmail(person.email)
                             }}
                           >
                             <TrashIcon

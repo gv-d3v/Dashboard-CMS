@@ -37,7 +37,7 @@ const Websites = () => {
         </div>
       </header>
       <main>
-        <div className="bg-gray-100 h-screen">
+        <div className="bg-gray-100 h-screen mt-0.5">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl py-4 sm:py-4 lg:max-w-none lg:py-4">
               <SearchBar

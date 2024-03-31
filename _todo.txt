@@ -5,11 +5,18 @@
     - Profile modal - DONE
     - Dynamic next / Lazy load for modals - DONE
     - Firebase and fire storage auth - DONE
-    - Firabe storage auth restriction - -DONE
+    - Firabase storage auth restriction - DONE
+    - Firabase auth users control / edit - DONE
+    - Firabase config pass from server - DONE
+    - Customer Support Page - DONE
+    - Protect API calls - DONE
+    - FB Auth admin json to env - DONE
+    - Img upload instead of img link usage - DONE
+    - Websites - DONE
+    - Users (different folders for users and websites, passed trough params) - DONE
 
 -TEAM
     - Password reset for other users
-
 
 - WEBSITES
     - Website content management page - partially DONE
@@ -17,61 +24,15 @@
         - Create new Loading for components
         - Change view to thumbnails, when hover show edit, delete and maybe name 
         - Add / Edit modals edit to fit screen
-
-    - Img upload instead of img link usage
-        - Websites - DONE
-        - Users (different folders for users and websites, passed trough params) - DONE
+    - Websites Media page
+    - Websites FTP page
+    - Websites Settings page
 
 -DASHBOARD
-    - Protect API calls
+    
     - File manager / FTP
     - Settings page
-    - Customer Support Page
     - Fix typos
-    - Remove unnecessary comments
     - version control or revision history for changes made to the website
-
--------------------------------------------------------------------------------------------------------------------------
-BUILD ERR's
--------------------------------------------------------------------------------------------------------------------------
-
-./app/dashboard/team/page.jsx
-164:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-
-./app/dashboard/websites/[id]/page.jsx
-39:6  Warning: React Hook useEffect has a missing dependency: 'pathname'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-
-./components/AddContentForm.jsx
-75:6  Warning: React Hook useEffect has a missing dependency: 'applyFilters'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-196:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-
-./components/EditForm.jsx
-110:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-
-./components/NavBar.jsx
-63:3  Warning: React Hook useEffect contains a call to 'setEnableScroll'. Without a list of dependencies, this can lead to an infinite chain of updates. To fix this, pass [session, pathname, sessionImage, getUser] as a second argument to the useEffect Hook.  react-hooks/exhaustive-deps
-101:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-143:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-
-./components/Profile.jsx
-16:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-
-./components/RegisterForm.jsx
-84:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-
-./components/SearchBar.jsx
-19:6  Warning: React Hook useEffect has a missing dependency: 'handleSearch'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-
-./components/sidebar-tabs/Manage.jsx
-61:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-61:17  Warning: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
-
-./components/SideBar.jsx
-14:7  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-
-./components/tools/handleScroll.jsx
-21:6  Warning: React Hook useEffect has a missing dependency: 'handleScroll'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-
-./components/WebsiteList.jsx
-13:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-13:19  Warning: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+    - Add full refresh after edit user
+    - Edit CSS for mobiles and tablets

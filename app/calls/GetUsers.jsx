@@ -1,11 +1,10 @@
 export const GetUsers = async () => {
   try {
-    const resUserExists = await fetch(`/api/userShow`, {
+    const resUserExists = await fetch(`/api/team/userShow`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store",
     });
 
     if (!resUserExists.ok) {

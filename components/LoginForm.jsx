@@ -3,13 +3,15 @@
 import { signIn } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "@/lib/firebase";
+import Loading from "@/app/loading";
+import initializeFirebase from "@/lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -36,7 +38,7 @@ export default function LoginForm() {
       return;
     }
 
-    
+    setLoading(true);
 
     try {
       const res = await signIn("credentials", {
@@ -46,12 +48,15 @@ export default function LoginForm() {
       });
 
       if (res.error) {
+        setLoading(false);
         setError("Incorrect credentials");
         return;
       }
-      signInWithEmailAndPassword(auth, email, password)
+      signInWithEmailAndPassword((await initializeFirebase()).auth, email, password);
+
       router.replace("dashboard");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -91,6 +96,7 @@ export default function LoginForm() {
           {error && <div className="bg-red-500 text-white w-auto text-sm py-3 px-3 rounded-md mt-0 text-center">{error}</div>}
         </form>
       </div>
+      {loading ? <Loading /> : null}
     </div>
   );
 }

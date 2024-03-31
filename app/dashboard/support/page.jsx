@@ -46,7 +46,7 @@ export default function Support() {
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 ">Support</h1>
           </div>
         </header>
-        <main className="mb-10 mt-1">
+        <main className="mb-24 mt-1">
           <div className="max-w-screen-xl mx-auto px-5 bg-white min-h-sceen">
             <div className="flex flex-col items-center">
               <h2 className="font-bold text-5xl mt-5 tracking-tight">FAQ</h2>

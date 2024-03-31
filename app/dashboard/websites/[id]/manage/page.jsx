@@ -9,11 +9,11 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { GetAccommodations } from "@/app/calls/GetAccommodations";
 import SearchBar from "@/components/SearchBar";
 
-const DynamicAddContent = dynamic(() => import("@/components/modals/AddContent"), {
+const DynamicAddContent = dynamic(() => import("@/components/modals/content/AddContentModal"), {
   ssr: false,
 });
 
-const DynamicEditContent = dynamic(() => import("@/components/modals/EditContentModal"), {
+const DynamicEditContent = dynamic(() => import("@/components/modals/content/EditContentModal"), {
   ssr: false,
 });
 
@@ -59,7 +59,7 @@ export default function Manage() {
   const deleteAccomm = async () => {
     const _id = accommId;
     try {
-      const deleteAccomm = await fetch("/api/accommDelete", {
+      const deleteAccomm = await fetch("/api/content/accommDelete", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

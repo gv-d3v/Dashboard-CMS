@@ -12,7 +12,7 @@ const LocationDropdown = ({ showDestinationDrop, destMenuRef, handleDestinationH
   return (
     <React.Fragment>
       <div
-        style={{ display: isVisible ? "block" : "none", left: `${popupLeft + 55}px`,top:"190px" }}
+        style={{ display: isVisible ? "block" : "none", left: `${popupLeft + 55}px`, top: "190px" }}
         className={`dropdown-menu destination list ${searchedDestination.length > 0 ? showDestinationDrop : null}`}
         ref={destMenuRef}
         onClick={() => handleDestinationHide()}

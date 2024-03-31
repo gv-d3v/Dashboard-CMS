@@ -1,5 +1,5 @@
 import mongoose, { Schema, models } from "mongoose";
-//commnet
+
 const accommodationSchema = new Schema(
   {
     websiteId: {

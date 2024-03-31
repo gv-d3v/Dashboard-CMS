@@ -1,5 +1,5 @@
 import mongoose, { Schema, models } from "mongoose";
-//
+
 const websitesSchema = new Schema({
   name: {
     type: String,
