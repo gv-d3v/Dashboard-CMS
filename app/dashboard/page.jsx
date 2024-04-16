@@ -1,7 +1,5 @@
 "use client";
 
-import { signOut as NextAuthSignOut } from "next-auth/react";
-import initializeFirebase from "@/lib/firebase";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,7 +10,9 @@ export default function Dashboard() {
 
   const handleSignOut = async () => {
     setLoading(true);
-    NextAuthSignOut();
+    const { signOut } = await import("next-auth/react");
+    const initializeFirebase = (await import("@/lib/firebase")).default;
+    signOut();
     (await initializeFirebase()).auth.signOut();
   };
 
@@ -25,6 +25,7 @@ export default function Dashboard() {
       href: "dashboard/websites",
       height: 50,
       width: 50,
+      priority: true,
     },
     {
       name: "Edit Team",
@@ -34,6 +35,7 @@ export default function Dashboard() {
       href: "dashboard/team",
       height: 50,
       width: 50,
+      priority: false,
     },
     {
       name: "File Manager",
@@ -43,6 +45,7 @@ export default function Dashboard() {
       href: "dashboard/file-manager",
       height: 50,
       width: 50,
+      priority: false,
     },
     {
       name: "Settings",
@@ -52,6 +55,7 @@ export default function Dashboard() {
       href: "dashboard/settings",
       height: 50,
       width: 50,
+      priority: false,
     },
     {
       name: "Contact Support",
@@ -61,6 +65,7 @@ export default function Dashboard() {
       href: "dashboard/support",
       height: 50,
       width: 50,
+      priority: false,
     },
     {
       name: "Sign Out",
@@ -70,6 +75,7 @@ export default function Dashboard() {
       href: `#`,
       height: 50,
       width: 50,
+      priority: false,
       function: handleSignOut,
     },
   ];
@@ -101,6 +107,7 @@ export default function Dashboard() {
                           unoptimized={true}
                           onClick={menuItem.function ? menuItem.function : null}
                           alt={menuItem.imageAlt}
+                          priority={menuItem.priority}
                         />
                         <div className="centeredMenu">
                           <h1 className="">{menuItem.name}</h1>

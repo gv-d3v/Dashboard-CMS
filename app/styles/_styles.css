@@ -8,3 +8,19 @@
 @import "./edit-website/_edit-website.css";
 @import "./butttons.css";
 @import "./support/support.css";
+@import "./file-manager/file-manager.css";
+@import "./settings/settings.css";
+
+/*HIDE NUMBER FIELDS ARROWS*/
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

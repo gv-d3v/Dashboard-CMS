@@ -28,7 +28,8 @@ export default function TestFieldsUserEdit(currentUser, name, email, password, p
       setError("The password must be more than 8 characters, at least 1 lower case, 1 upper case, 1 numeric character, and one special character.");
       return;
     }
-    if (!passwordConfirm) {
+    if (password && !passwordConfirm) {
+      console.log(password)
       setError("Please confirm password");
       return;
     }

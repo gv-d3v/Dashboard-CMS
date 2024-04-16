@@ -1,19 +1,18 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
-import { signOut as NextAuthSignOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
-import initializeFirebase from "@/lib/firebase";
+import Image from "next/image";
+
+import { useSession } from "next-auth/react";
 
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-import { GetUsers } from "@/app/calls/GetUsers";
 import handleScroll from "@/tools/handleScroll";
 import checkPath from "@/tools/checkPath";
-import Image from "next/image";
 
 const DynamicProfileModal = dynamic(() => import("../modals/users/UserProfileModal"), {
   ssr: false,
@@ -25,9 +24,9 @@ const DynamicEditModall = dynamic(() => import("../modals/users/EditUserModal"),
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
+  { name: "Websites", href: "/dashboard/websites", current: false },
   { name: "Team", href: "/dashboard/team", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "File manager", href: "/dashboard/file-manager", current: false },
 ];
 
 const activeLink = classNames(`text-white bg-gray-900`);
@@ -55,6 +54,7 @@ export default function NavBar() {
   const [componentsLoad, setComponentsLoad] = useState(false);
 
   const getUser = async () => {
+    const { GetUsers } = await import("@/app/calls/GetUsers");
     const data = await GetUsers();
     people.push(...data);
     people.forEach(e => {
@@ -73,7 +73,9 @@ export default function NavBar() {
   handleScroll(158, setnavS, "nav-scroll", "", enableScroll);
 
   const handleSignOut = async () => {
-    NextAuthSignOut();
+    const { signOut } = await import("next-auth/react");
+    const initializeFirebase = (await import("@/lib/firebase")).default;
+    signOut();
     (await initializeFirebase()).auth.signOut();
   };
 
@@ -135,6 +137,7 @@ export default function NavBar() {
                         href={item.href}
                         className={`${pathname === item.href ? activeLink : inactiveLink} rounded-md px-3 py-2 text-sm font-medium`}
                         aria-current={item.current ? "page" : undefined}
+                        onClick={() => (document.body.style.overflow = "hide" ? (document.body.style.overflow = "auto") : null)}
                       >
                         {item.name}
                       </Link>
@@ -144,14 +147,11 @@ export default function NavBar() {
               </div>
               {!navS ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
+                  <span className="relative rounded-full bg-gray-800 p-1 text-gray-400">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
                     <p>{currentUser.name}</p>
-                  </button>
+                  </span>
 
                   {/* Profile dropdown */}
                   <Menu
@@ -159,12 +159,12 @@ export default function NavBar() {
                     className="relative ml-3"
                   >
                     <div>
-                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <img
                           className={`h-8 w-8 rounded-full bg-white`}
-                          src={session?.user ? sessionImage : "/user.png"}
+                          src={session?.user ? (typeof sessionImage[0] === "object" ? sessionImage[0].downloadURL : sessionImage) : "/user.png"}
                           alt=""
                         />
                       </Menu.Button>
@@ -185,6 +185,7 @@ export default function NavBar() {
                               href="#"
                               onClick={() => {
                                 {
+                                  document.body.style.overflow = "hide" ? (document.body.style.overflow = "scroll") : null;
                                   profileSettings();
                                 }
                               }}

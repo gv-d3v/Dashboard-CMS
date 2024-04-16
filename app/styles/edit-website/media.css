@@ -1,0 +1,34 @@
+.media-h1-container {
+  background: rgb(31, 41, 55);
+  background: linear-gradient(90deg, rgba(31, 41, 55, 1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.media-h1-container h1 {
+  color: white;
+  padding: 10px 20px;
+}
+
+.media-images-container {
+  display: flex;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 2px;
+}
+
+.media-images-container img:hover {
+  transition-property: all;
+  transition-property: transform;
+  scale: 1.01;
+}
+
+.class > *:not(:last-child) {
+}
+
+.media-images-container > *:not(:last-child) {
+  padding-right: 2px;
+}
+
+.media-container {
+  /* background: rgb(31, 41, 55);
+    background: linear-gradient(90deg, rgba(31, 41, 55, 1) 0%, rgba(31, 41, 55, 0.807) 50%, rgba(31, 41, 55, 1) 100%);*/
+}

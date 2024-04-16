@@ -1,33 +1,35 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { UserPlusIcon, PencilSquareIcon, TrashIcon, ArrowPathIcon, UserIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { GetUsers } from "@/app/calls/GetUsers";
-import { useSession } from "next-auth/react";
-import Loading from "@/app/loading";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
+import { UserPlusIcon, PencilSquareIcon, TrashIcon, ArrowPathIcon, UserIcon } from "@heroicons/react/24/outline";
+import Loading from "@/app/loading";
 
-const DynamicAddModal = dynamic(() => import("@/components/modals/users/AddUserModal"), {
+const AddModal = dynamic(() => import("@/components/modals/users/AddUserModal"), {
   ssr: false,
 });
 
-const DynamicEditModal = dynamic(() => import("@/components/modals/users/EditUserModal"), {
+const EditModal = dynamic(() => import("@/components/modals/users/EditUserModal"), {
   ssr: false,
 });
 
-const DynamicDeleteModal = dynamic(() => import("@/components/modals/DeleteModal"), {
+const DeleteModal = dynamic(() => import("@/components/modals/DeleteModal"), {
   ssr: false,
 });
 
-const DynamicProfileModal = dynamic(() => import("@/components/modals/users/UserProfileModal"), {
+const ProfileModal = dynamic(() => import("@/components/modals/users/UserProfileModal"), {
   ssr: false,
 });
 
 export default function Team() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const currentUser = session?.user;
   const Administrator = "Administrator";
+  const deleteHeader = "Delete account";
+  const deleteMessage = "Are you sure you want to delete this account? All of its data will be permanently removed. This action cannot be undone.";
 
   const [componentsLoad, setComponentsLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,16 +41,16 @@ export default function Team() {
   const [people, setPeople] = useState([]);
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userFBImages, setUserFBImages] = useState("");
 
   const [editPerson, setEditPerson] = useState("");
 
   const [profile, setProfile] = useState("");
   const [openProfile, setOpenProfile] = useState(false);
 
-  const router = useRouter();
-
   //GET USERS
   const fetchData = async () => {
+    const { GetUsers } = await import("@/app/calls/GetUsers");
     const data = await GetUsers();
     setPeople(data);
     setIsLoading(false);
@@ -70,8 +72,15 @@ export default function Team() {
     });
   };
 
+  const handleDeleteButton = person => {
+    setOpenDelete(true);
+    setUserId(person._id);
+    setUserEmail(person.email);
+    typeof person.images[0] === "object" ? setUserFBImages(person.images[0].firebaseURL) : null;
+  };
+
   //DELETE USER FB
-  const deleteFireUser = (email) => {
+  const deleteFireUser = email => {
     fetch("/api/fb/fireUsersDelete", {
       method: "DELETE",
       headers: {
@@ -93,8 +102,14 @@ export default function Team() {
       });
   };
 
+  const deleteUserFBImages = async () => {
+    const { deleteFiles } = await import("@/lib/storage");
+    deleteFiles(userFBImages);
+    setUserFBImages("");
+  };
+
   //DELETE USER DB
-  const deleteUser = async () => {
+  const deleteUser = async userId => {
     const _id = userId;
 
     try {
@@ -111,7 +126,8 @@ export default function Team() {
       const result = await deleteUser.json();
 
       if (result === true) {
-        deleteFireUser(userEmail)
+        deleteFireUser(userEmail);
+        userFBImages ? deleteUserFBImages() : null;
         fetchData();
         setTimeout(() => {
           setUserId("");
@@ -212,7 +228,7 @@ export default function Team() {
                             ? "h-12 w-12 flex-none rounded-full bg-gray-50 activeBorder"
                             : "h-12 w-12 flex-none rounded-full bg-gray-50"
                         }
-                        src={person.images ? person.images : "/user.png"}
+                        src={typeof person.images[0] === "object" ? person.images[0].downloadURL : person.images}
                         alt={`Image of ${person.name}`}
                       />
 
@@ -253,10 +269,8 @@ export default function Team() {
                         currentUser?.email !== person.email ? (
                           <button
                             className="py-2 px-5 mr-5 rounded-lg bg-red-600 text-sm font-medium text-white buttonShadow mt-2.5 md:mt-0 lg:mt-0"
-                            onClick={e => {
-                              setOpenDelete(true);
-                              setUserId(person._id);
-                              setUserEmail(person.email)
+                            onClick={() => {
+                              handleDeleteButton(person);
                             }}
                           >
                             <TrashIcon
@@ -285,14 +299,14 @@ export default function Team() {
       </div>
 
       {(componentsLoad || openAdd) && (
-        <DynamicAddModal
+        <AddModal
           openAdd={openAdd}
           setOpenAdd={setOpenAdd}
           fetchData={fetchData}
         />
       )}
       {(componentsLoad || openEdit) && (
-        <DynamicEditModal
+        <EditModal
           openEdit={openEdit}
           setOpenEdit={setOpenEdit}
           editPerson={editPerson}
@@ -301,15 +315,18 @@ export default function Team() {
         />
       )}
       {(componentsLoad || openDelete) && (
-        <DynamicDeleteModal
+        <DeleteModal
           openDelete={openDelete}
           setOpenDelete={setOpenDelete}
+          objectId={userId}
           deleteFunction={deleteUser}
           setObjectId={setUserId}
+          deleteHeader={deleteHeader}
+          deleteMessage={deleteMessage}
         />
       )}
       {(componentsLoad || openProfile) && (
-        <DynamicProfileModal
+        <ProfileModal
           openProfile={openProfile}
           setOpenProfile={setOpenProfile}
           profile={profile}

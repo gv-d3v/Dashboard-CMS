@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import handleUpload from "../../upload/handleUpload";
 import Loading from "@/app/loading";
 import TestFieldsUserEdit from "@/tools/testFieldsUserEdit";
+import { deleteFiles } from "@/lib/storage";
 
 export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, people, editPerson }) {
   const router = useRouter();
@@ -58,6 +59,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
     });
   };
 
+  //SHOW CHANGE PASSWORD FIELDS
   const handleChangePass = e => {
     e.preventDefault();
     setChangePassword(true);
@@ -88,6 +90,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
       });
   };
 
+  //SUBMIT
   const handleSubmit = async e => {
     e.preventDefault();
 
@@ -101,9 +104,16 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
 
     setLoading(true);
 
-    const images = file ? await handleUpload({ userId, name, file }) : imageUrl;
+    //DELETE PREVIOUS IMAGE FROM STORAGE, THEN UPLOAD NEW ONE
+    const handleDeleteAndUpload = async () => {
+      const prevFBImage = editPerson.images[0].firebaseURL;
+      deleteFiles(prevFBImage);
+      return handleUpload({ userId, name, file });
+    };
 
-    //API EDIT
+    const images = file ? await handleDeleteAndUpload() : { photos: imageUrl };
+
+    //API CALL - EDIT USER
     const res = await fetch("/api/team/userEdit", {
       method: "POST",
       headers: {
@@ -114,7 +124,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
         name,
         email,
         password,
-        images,
+        images: images.photos,
         role,
       }),
     });
@@ -144,7 +154,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
       <div className="grid place-items-center addImage my-auto  ml-auto mr-4 w-full">
         <img
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
-          src={addImageUrl !== "/user.png" ? addImageUrl : "/addImage.png"}
+          src={addImageUrl[0] !== "/user.png" ? (typeof addImageUrl[0] === "object" ? addImageUrl[0].downloadURL : addImageUrl) : "/addImage.png"}
           alt="Add Image"
           onClick={() => setOpenURLModal(true)}
         />

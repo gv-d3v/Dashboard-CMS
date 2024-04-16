@@ -33,7 +33,7 @@ export default function SideBar({ id, pathname }) {
           <Link href={`./ftp`}>
             <button>
               <FTPSVG />
-              FTP
+              File Manager
             </button>
           </Link>
         </li>

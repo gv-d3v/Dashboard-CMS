@@ -1,0 +1,164 @@
+.settings-main {
+  /*height: 100vh;*/
+}
+
+.settings-container {
+  height: 400px;
+  width: 50%;
+  background-color: rgb(243, 244, 246);
+  margin: auto;
+  margin-top: 40px;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.settings-option {
+  background-color: var(--dark);
+  padding: 10px;
+  border-radius: 20px;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.settings-switch {
+  background-color: white;
+  padding: 2px;
+  margin-left: auto;
+  border-radius: 30px;
+  display: flex;
+}
+
+.settings-switch img {
+  width: 38px;
+}
+
+/*LANGUANGE*/
+.settings-option.laguange {
+  padding: 8px;
+}
+
+.settings-option span {
+  color: white;
+  padding: 7px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.settings-switch.laguange {
+  width: 111px;
+}
+
+.settings-laguange {
+  display: flex;
+  cursor: pointer;
+}
+
+span.serbian-lang.en,
+span.english-lang.sr,
+img.serbian-lang.en,
+img.english-lang.sr {
+  opacity: 0;
+  position: absolute;
+  visibility: hidden;
+}
+
+img.serbian-lang {
+  margin-left: 73px;
+}
+span.serbian-lang,
+img.english-lang {
+  margin-left: -73px;
+}
+
+img.serbian-lang.sr {
+  -webkit-transform: translateX(-73px);
+  -ms-transform: translateX(-73px);
+  transform: translateX(-73px);
+  transition: 0.5s;
+}
+
+img.english-lang.en {
+  -webkit-transform: translateX(73px);
+  -ms-transform: translateX(73px);
+  transform: translateX(73px);
+  transition: 0.5s;
+}
+
+span.serbian-lang.sr,
+span.english-lang.en {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease-in-out;
+}
+
+/**/
+.settings-container button {
+  display: block;
+  margin-left: auto;
+  margin-top: 200px;
+}
+
+.settings-laguange span {
+  color: var(--dark);
+}
+
+/*SWITCH*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #6366f1;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #6366f1;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

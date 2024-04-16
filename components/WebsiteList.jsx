@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 
 const WebsiteList = ({ websites }) => {
   if (websites.length > 0) {
@@ -27,7 +26,7 @@ const WebsiteList = ({ websites }) => {
                     href={`./websites/${website._id}/manage`}
                     id="manage-button"
                   >
-                    <button className="manage-button">Manage</button>
+                    <button className="manage-button shadow">Manage</button>
                   </Link>
                 </li>
                 {index < websites.length - 1 ? <hr className="line-break" /> : null}

@@ -86,7 +86,7 @@ export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData })
       }
 
       //UPLOAD IMAGES
-      const images = file ? await handleUpload({ userId, name, file }) : imageUrl;
+      const images = file ? await handleUpload({ userId, name, file }) : { photos: imageUrl };
 
       //REGISTER API
       const res = await fetch("/api/team/userAdd", {
@@ -99,7 +99,7 @@ export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData })
           name,
           email,
           password,
-          images,
+          images: images.photos,
           role,
         }),
       });

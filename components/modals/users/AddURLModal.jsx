@@ -84,7 +84,7 @@ export default function AddURLModal({ openURLModal, setOpenURLModal, addImageUrl
                   >
                     {addImageUrl !== "/user.png" && addImageUrl !== "/addImage.png" ? "Change" : "Add"}
                   </button>
-                  {addImageUrl !== "/user.png" && addImageUrl !== "/addImage.png" ? (
+                  {addImageUrl[0] !== "/user.png" && addImageUrl !== "/addImage.png" ? (
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"

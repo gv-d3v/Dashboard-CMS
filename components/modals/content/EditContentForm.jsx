@@ -9,6 +9,7 @@ import countries from "@/db/Countries";
 import handleUpload from "../../upload/handleUpload";
 import Loading from "@/app/loading";
 import TestFieldsContentReg from "@/tools/testFieldsContentReg";
+import { deleteFiles } from "@/lib/storage";
 
 const DynamicLoadLocationDropdown = dynamic(() => import("../../dropdowns/LocationDropdown"), {
   ssr: false,
@@ -111,8 +112,15 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
 
     setLoading(true);
 
+    //DELETE PREVIOUS IMAGES FROM STORAGE, THEN UPLOAD NEW ONE
+    const handleDeleteAndUpload = async () => {
+      const prevFBImage = editAccommodation.images;
+      prevFBImage.map(image => deleteFiles(image.firebaseURL).catch(error=>console.log(error, "That image has already been deleted")));
+      return handleUpload({ websiteId, accommId, name, file });
+    };
+
     //UPLOAD IMAGES
-    const images = file ? await handleUpload({ websiteId, accommId, name, file }) : previewImages;
+    const images = file ? await handleDeleteAndUpload() : previewImages;
 
     try {
       const res = await fetch("/api/content/accommEdit", {
@@ -170,83 +178,107 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
           onSubmit={handleSubmit}
           className="flex flex-col gap-3 accommodationForm"
         >
-          <input
-            type="text"
-            placeholder="Name of accommodation"
-            onChange={e => {
-              setName(e.target.value);
-              setError("");
-            }}
-            value={name}
-          />
-          <div className="accommodation-field-position">
+          <div className="form-description-position single-input">
+            <span className="form-description">Name</span>
             <input
-              className="input-margin"
               type="text"
-              placeholder="Country"
+              placeholder="Name of accommodation"
               onChange={e => {
-                handleSearch(e);
+                setName(e.target.value);
                 setError("");
               }}
-              value={destination}
+              value={name}
             />
-            <input
-              className="input-margin"
-              type="text"
-              placeholder="City"
-              onChange={e => setCity(e.target.value)}
-              value={city}
-            />
-            <input
-              type="text"
-              placeholder="Address"
-              onChange={e => setAddress(e.target.value)}
-              value={address}
-            />
+          </div>
+          <div className="accommodation-field-position">
+            {" "}
+            <div className="form-description-position middle">
+              <span className="form-description">Country</span>
+              <input
+                className="input-margin"
+                type="text"
+                placeholder="Country"
+                onChange={e => {
+                  handleSearch(e);
+                  setError("");
+                }}
+                value={destination}
+              />{" "}
+            </div>{" "}
+            <div className="form-description-position middle">
+              <span className="form-description">City</span>
+              <input
+                className="input-margin"
+                type="text"
+                placeholder="City"
+                onChange={e => setCity(e.target.value)}
+                value={city}
+              />{" "}
+            </div>{" "}
+            <div className="form-description-position middle">
+              <span className="form-description">Address</span>
+              <input
+                type="text"
+                placeholder="Address"
+                onChange={e => setAddress(e.target.value)}
+                value={address}
+              />{" "}
+            </div>
           </div>
 
           <div className="accommodation-field-position">
-            <input
-              className="input-margin"
-              type="number"
-              placeholder="Rooms"
+            {" "}
+            <div className="form-description-position middle">
+              <span className="form-description">Rooms</span>
+              <input
+                className="input-margin"
+                type="number"
+                placeholder="Number of rooms"
+                onChange={e => {
+                  setRooms(e.target.value);
+                  setError("");
+                }}
+                value={rooms}
+              />{" "}
+            </div>{" "}
+            <div className="form-description-position middle">
+              <span className="form-description">Guests</span>
+              <input
+                className="input-margin"
+                type="number"
+                placeholder="Number of guests"
+                onChange={e => {
+                  setGuests(e.target.value);
+                  setError("");
+                }}
+                value={guests}
+              />{" "}
+            </div>{" "}
+            <div className="form-description-position middle">
+              <span className="form-description">Price</span>
+              <input
+                type="number"
+                placeholder="Price per day"
+                onChange={e => {
+                  setPrice(e.target.value);
+                  setError("");
+                }}
+                value={price}
+              />{" "}
+            </div>
+          </div>
+          <div className="form-description-position single-input">
+            <span className="form-description">Description</span>
+            <textarea
+              type="text"
+              placeholder="Short description about your accommodation"
               onChange={e => {
-                setRooms(e.target.value);
+                setDescription(e.target.value);
                 setError("");
               }}
-              value={rooms}
-            />
-            <input
-              className="input-margin"
-              type="number"
-              placeholder="Guests"
-              onChange={e => {
-                setGuests(e.target.value);
-                setError("");
-              }}
-              value={guests}
-            />
-            <input
-              type="number"
-              placeholder="Price per day"
-              onChange={e => {
-                setPrice(e.target.value);
-                setError("");
-              }}
-              value={price}
+              value={description}
             />
           </div>
-
-          <textarea
-            type="text"
-            placeholder="Description"
-            onChange={e => {
-              setDescription(e.target.value);
-              setError("");
-            }}
-            value={description}
-          />
-
           <div
             className="add-images"
             onClick={handleUploadButton}
@@ -260,7 +292,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
                       className="possition-images"
                     >
                       <img
-                        src={photo}
+                        src={typeof photo === "object" ? photo.downloadURL : photo}
                         alt="Add image"
                       />
                     </div>

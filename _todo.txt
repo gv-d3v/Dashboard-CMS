@@ -1,4 +1,22 @@
--DONE
+- TO DO
+    - Fix typos
+    - Version control or revision history for changes made to the website
+    - Add full refresh after edit user from profile
+    - Edit CSS for mobiles and tablets
+    - Media images slider
+    - Media preview show all images
+    - Media preview add delete
+    - Change view to thumbnails, when hover show edit, delete and maybe name for Website page
+    - Different message when no content and when searched conntent does not match for Website page (part of website settings)
+    - Settings page for Website page
+    - Create json and DB entry for two separate languanges
+
+
+- MAJOR TO DO
+    - When deleting items in file manager update database
+    - Password reset for other users
+
+- DONE
     - Add JWT Token expiry - DONE
     - Edit user image - DONE
     - Login autocomplete failure - DONE
@@ -13,26 +31,14 @@
     - FB Auth admin json to env - DONE
     - Img upload instead of img link usage - DONE
     - Websites - DONE
-    - Users (different folders for users and websites, passed trough params) - DONE
+    - Users (different folders for users and websites, passed trough params)- DONE
+    - File manager / FTP page - DONE
+    - Settings page - DONE
+    - Create languange slider - DONE
+    - Website content management page - DONE
+    - Create new Loading for components -DONE
+    - Websites Media page - DONE
+    - Websites FTP page - DONE
+    - Adjust dynamic loading, components and imports - DONE
 
--TEAM
-    - Password reset for other users
 
-- WEBSITES
-    - Website content management page - partially DONE
-        - Different message when no content and when searched conntent does not match
-        - Create new Loading for components
-        - Change view to thumbnails, when hover show edit, delete and maybe name 
-        - Add / Edit modals edit to fit screen
-    - Websites Media page
-    - Websites FTP page
-    - Websites Settings page
-
--DASHBOARD
-    
-    - File manager / FTP
-    - Settings page
-    - Fix typos
-    - version control or revision history for changes made to the website
-    - Add full refresh after edit user
-    - Edit CSS for mobiles and tablets

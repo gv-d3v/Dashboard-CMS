@@ -85,13 +85,13 @@ export default function Support() {
               })}
             </div>
             <div className="flex flex-col items-center">
-              <p className="text-neutral-500 text-xl mt-10 text-center">You were unable to find answer to you question?</p>
+              <p className="text-neutral-500 text-xl mt-10 text-center">You were unable to find answer to your question?</p>
               <p className="text-neutral-500 text-xl mt-4 text-center">
                 Please refer to the contact information below to reach out to us directly by using one of the available methods.
               </p>
             </div>
-            <div className="flex flex-col items-center">
-              <h2 className="font-bold text-5xl mt-14 tracking-tight">Contact</h2>
+            <div className="flex flex-col items-center mt-16">
+              <h2 className="font-bold text-5xl  tracking-tight">Contact</h2>
             </div>
             <div className="flex flex-col">
               <div className="support-row">
@@ -101,7 +101,10 @@ export default function Support() {
                       src="/call3.png"
                       alt="Call center"
                     />
-                    <p>+387 65 123 456</p>
+                    <div>
+                      <p className="support-desc">Phone number:</p>
+                      <p>+387 65 123 456</p>
+                    </div>
                   </div>
                   <div className="support-row mt-10">
                     <img
@@ -109,11 +112,15 @@ export default function Support() {
                       alt="Support email"
                       className="ml-50"
                     />
-                    <p className="support-mail">odd.genetics@hotmail.com</p>
+                    <div>
+                      <p className="support-desc">Email address:</p>
+                      <p className="support-mail">odd.genetics@hotmail.com</p>
+                    </div>
                   </div>
                 </div>
 
                 <div className="support-col mt-20">
+                  
                   <div className="mx-auto w-full max-w-lg">
                     <form className="">
                       <div className="grid gap-6 sm:grid-cols-2">

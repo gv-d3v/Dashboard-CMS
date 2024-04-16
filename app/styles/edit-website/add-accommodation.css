@@ -1,3 +1,7 @@
+button.add-content:hover{
+  scale: 1.01 !important;
+}
+
 .accommodation-form-position {
   margin-left: auto;
   margin-right: auto;
@@ -7,9 +11,9 @@
   display: flex;
 }
 
-.accommodation-field-position input {
+/*.accommodation-field-position input {
   width: 33.4%;
-}
+}*/
 
 .input-margin {
   margin-right: 10px;
@@ -125,3 +129,28 @@
 .added-images-num {
   margin: 0 auto;
 }
+
+/*form-description*/
+.form-description,
+.form-description::placeholder,
+::-moz-placeholder,
+.form-description::-webkit-input-placeholder, .added-images span {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.form-description-position {
+  display: grid;
+  width: 33.4%;
+}
+
+.form-description-position.middle {
+  padding: 0 5px;
+}
+
+.form-description-position.single-input,
+.form-description-position.single-input input,
+.form-description-position textarea {
+  width: 100%;
+}
+

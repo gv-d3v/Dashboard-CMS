@@ -7,12 +7,13 @@ input {
   @apply border border-gray-200 py-2 px-6 bg-zinc-100/40;
 }
 
-.addButton {
-  justify-content: center;
-}
-
 .showPointer,
 .addImage,
 .dropMenu {
   cursor: pointer;
+}
+
+button:hover {
+  scale: 1.05;
+  transition: 0.1s;
 }

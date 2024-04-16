@@ -44,7 +44,7 @@ const accommodationSchema = new Schema(
     },
     images: {
       type: Array,
-      required: false,
+      required: true,
     },
   },
   { timestamps: true }

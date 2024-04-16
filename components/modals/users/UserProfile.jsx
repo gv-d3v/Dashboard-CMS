@@ -14,7 +14,7 @@ export default function Profile({ setOpenProfile, cancelButtonRef, profile, from
       <div className="grid place-items-center mb-auto mt-auto ml-auto mr-auto">
         <img
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
-          src={images}
+          src={typeof images[0] === "object" ? images[0].downloadURL : images}
           alt="Profile Image"
         />
       </div>
@@ -23,11 +23,29 @@ export default function Profile({ setOpenProfile, cancelButtonRef, profile, from
         <div className="">
           <div className="flex flex-col gap-3">
             <div className="profile">
-              <span>Name: {name}</span>
-              <span>Email: {email}</span>
-              <span>Role: {role}</span>
-              <span>Joined: {joined.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
-              <span>Employed: {`${worked} ${worked === 0 ? "day" : "days"}`}</span>
+              <span>
+                <b>Name: </b>
+                {name}
+              </span>
+              <span>
+                <b>Email: </b>
+                {email}
+              </span>
+              <span>
+                <b>Role: </b>
+                {role}
+              </span>
+              <span>
+                <b>Paygrade: </b>Grade 9
+              </span>
+              <span>
+                <b>Joined: </b>
+                {joined.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+              </span>
+              <span>
+                <b>Employed: </b>
+                {`${worked} ${worked === 1 ? "day" : "days"}`}
+              </span>
             </div>
 
             <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

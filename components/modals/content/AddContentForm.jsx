@@ -149,7 +149,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
         console.error("Error in client-side request:", errorResponse);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.error("Error in client-side request:", error);
     }
   };
@@ -170,75 +170,99 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
           onSubmit={handleSubmit}
           className="flex flex-col gap-3 accommodationForm"
         >
-          <input
-            type="text"
-            placeholder="Name of accommodation"
-            onChange={e => {
-              setName(e.target.value);
-              setError("");
-            }}
-          />
-          <div className="accommodation-field-position">
-            <input
-              className="input-margin"
-              type="text"
-              placeholder="Country"
-              onChange={e => {
-                handleSearch(e);
-                setError("");
-              }}
-              value={destination}
-            />
-            <input
-              className="input-margin"
-              type="text"
-              placeholder="City"
-              onChange={e => setCity(e.target.value)}
-            />
+          <div className="form-description-position single-input">
+            <span className="form-description">Name</span>
             <input
               type="text"
-              placeholder="Address"
-              onChange={e => setAddress(e.target.value)}
-            />
-          </div>
-
-          <div className="accommodation-field-position">
-            <input
-              className="input-margin"
-              type="number"
-              placeholder="Rooms"
+              placeholder="Name of accommodation"
               onChange={e => {
-                setRooms(e.target.value);
-                setError("");
-              }}
-            />
-            <input
-              className="input-margin"
-              type="number"
-              placeholder="Guests"
-              onChange={e => {
-                setGuests(e.target.value);
-                setError("");
-              }}
-            />
-            <input
-              type="number"
-              placeholder="Price per day"
-              onChange={e => {
-                setPrice(e.target.value);
+                setName(e.target.value);
                 setError("");
               }}
             />
           </div>
 
-          <textarea
-            type="text"
-            placeholder="Description"
-            onChange={e => {
-              setDescription(e.target.value);
-              setError("");
-            }}
-          />
+          <div className="accommodation-field-position">
+            <div className="form-description-position middle">
+              <span className="form-description">Country</span>
+              <input
+                className="input-margin"
+                type="text"
+                placeholder="Country"
+                onChange={e => {
+                  handleSearch(e);
+                  setError("");
+                }}
+                value={destination}
+              />
+            </div>
+            <div className="form-description-position middle">
+              <span className="form-description ">City</span>
+              <input
+                className="input-margin"
+                type="text"
+                placeholder="City"
+                onChange={e => setCity(e.target.value)}
+              />
+            </div>
+            <div className="form-description-position middle">
+              <span className="form-description ">Address</span>
+              <input
+                type="text"
+                placeholder="Address"
+                onChange={e => setAddress(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="accommodation-field-position">
+            <div className="form-description-position middle">
+              <span className="form-description">Rooms</span>
+              <input
+                className="input-margin"
+                type="number"
+                placeholder="Number of rooms"
+                onChange={e => {
+                  setRooms(e.target.value);
+                  setError("");
+                }}
+              />
+            </div>
+            <div className="form-description-position middle">
+              <span className="form-description">Guests</span>
+              <input
+                className="input-margin"
+                type="number"
+                placeholder="Number of guests"
+                onChange={e => {
+                  setGuests(e.target.value);
+                  setError("");
+                }}
+              />
+            </div>{" "}
+            <div className="form-description-position middle">
+              <span className="form-description">Price</span>
+              <input
+                type="number"
+                placeholder="Price per day"
+                onChange={e => {
+                  setPrice(e.target.value);
+                  setError("");
+                }}
+              />
+            </div>
+          </div>
+          <div className="form-description-position single-input">
+            <span className="form-description">Description</span>
+            <textarea
+              type="text"
+              placeholder="Short description about your accommodation"
+              onChange={e => {
+                setDescription(e.target.value);
+                setError("");
+              }}
+            />
+          </div>
 
           <div
             className="add-images"

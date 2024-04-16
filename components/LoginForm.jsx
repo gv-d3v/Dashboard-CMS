@@ -1,11 +1,8 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
-import initializeFirebase from "@/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -32,6 +29,10 @@ export default function LoginForm() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    const { signIn } = await import("next-auth/react");
+    const initializeFirebase = (await import("@/lib/firebase")).default;
+    const { signInWithEmailAndPassword } = await import("firebase/auth");
 
     if (!email || !password) {
       setError("Please fill out all fields");

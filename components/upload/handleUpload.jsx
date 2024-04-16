@@ -24,9 +24,5 @@ export default async function handleUpload({ websiteId, accommId, userId, name, 
 
   const imageURLs = await prepareImages(websiteId, name, images, accommId, userId);
 
-  if (userId) {
-    return imageURLs[0];
-  } else if (websiteId && accommId) {
-    return { ...images, photos: imageURLs };
-  }
+  return { ...images, photos: imageURLs };
 }

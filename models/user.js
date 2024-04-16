@@ -20,7 +20,7 @@ const userSchema = new Schema(
       required: true,
     },
     images: {
-      type: String,
+      type: Array,
       required: false,
     },
     role: {

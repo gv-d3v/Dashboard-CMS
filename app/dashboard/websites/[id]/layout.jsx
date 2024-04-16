@@ -45,15 +45,14 @@ export default function WebsitesLayout({ children }) {
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 website-h">
               <h1 className={`text-3xl font-bold tracking-tight text-gray-900`}>{website.name}</h1>
             </div>
-            <SideBar id={id} pathname={pathname} />
+            <SideBar
+              id={id}
+              pathname={pathname}
+            />
           </header>
           <Space space={"84px"} />
           <main className="popupleft">
-            <div className="bg-gray-100 h-auto min-h-screen pt-1">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-2xllg:max-w-none">{children}</div>
-              </div>
-            </div>
+          {children}
           </main>
         </div>
       );

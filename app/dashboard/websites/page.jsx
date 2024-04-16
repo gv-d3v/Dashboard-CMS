@@ -1,9 +1,8 @@
 "use client";
-import { GetWebsites } from "@/app/calls/GetWebsites";
+import { useEffect, useState } from "react";
 import Loading from "@/app/loading";
 import SearchBar from "@/components/SearchBar";
 import WebsiteList from "@/components/WebsiteList";
-import React, { useEffect, useState } from "react";
 
 const Websites = () => {
   const [allWebsites, setAllWebsites] = useState([]);
@@ -13,6 +12,7 @@ const Websites = () => {
 
   //GET USERS
   const fetchData = async () => {
+    const { GetWebsites } = await import("@/app/calls/GetWebsites");
     const data = await GetWebsites();
     setAllWebsites(data);
     setIsLoading(false);

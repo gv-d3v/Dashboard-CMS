@@ -38,14 +38,17 @@
   color: rgba(0, 0, 0, 0.7);
 }
 
-#manage-button {
-  margin-left: auto;
+.manage-button {
   background-color: rgb(31, 41, 55);
   color: rgb(209, 213, 219);
   font-family: "__Inter_aaf875", "__Inter_Fallback_aaf875";
   padding: 10px;
   height: 50%;
   border-radius: 5px;
+}
+
+#manage-button {
+  margin-left: auto;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -54,6 +57,6 @@
   opacity: 0.9;
 }
 
-.line-break{
-    margin: 20px 10px;
+.line-break {
+  margin: 20px 10px;
 }
