@@ -164,7 +164,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
   }, [destination]);
 
   return (
-    <div className="inline-block p-5 sm:flex md:flex lg:flex">
+    <div className="inline-block p-5 flex">
       <div className="grid place-items-center accommodation-form-position">
         <form
           onSubmit={handleSubmit}
@@ -173,6 +173,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
           <div className="form-description-position single-input">
             <span className="form-description">Name</span>
             <input
+              maxLength={24}
               type="text"
               placeholder="Name of accommodation"
               onChange={e => {
@@ -284,14 +285,16 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
                   );
                 })
               ) : (
-                <div className="possition-images">
-                  <span>Max size of image 2MB</span>
-                  <img
-                    className="add-image-button"
-                    src={`/addImages.png`}
-                    alt="Add image"
-                  />
-                  <span>Upload up to 6 images</span>
+                <div className="add-image-cont">
+                  <div className="possition-images">
+                    <span>Max size of image 2MB</span>
+                    <img
+                      className="add-image-button"
+                      src={`/addImages.png`}
+                      alt="Add image"
+                    />
+                    <span>Upload up to 6 images</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -305,7 +308,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
             </button>
             {previewImages ? (
               <button
-                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:mt-0 sm:ml-3 sm:w-auto"
                 onClick={() => {
                   setPreviewImages("");
                   emptyLocalStorage();

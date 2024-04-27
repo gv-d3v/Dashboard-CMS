@@ -5,9 +5,10 @@
 .file-manager li,
 .file-manager li button {
   display: flex;
+  text-align: left;
 }
 
-button.folders:hover{
+button.folders:hover {
   scale: 1.01 !important;
 }
 
@@ -55,8 +56,22 @@ button.folders:hover{
   background-color: rgb(31, 41, 55);
 }
 
-
-
 .line-break-ftp {
   margin: 5px 0;
+}
+
+@media screen and (max-width: 639px) {
+  .file-manager{
+    overflow: hidden !important;
+  }
+  .fileManagerDelButt {
+    position: absolute;
+    right: 40px;
+  }
+  .file-manager p {
+    padding-left: 20px;
+  }
+  .file-manager div {
+    padding-left: 40px;
+  }
 }

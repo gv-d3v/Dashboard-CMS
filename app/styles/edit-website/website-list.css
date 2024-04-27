@@ -60,3 +60,43 @@
 .line-break {
   margin: 20px 10px;
 }
+
+@media screen and (max-width: 640px) {
+  .website-list,
+  .search-website {
+    width: 90%;
+  }
+
+  .manage-button {
+    padding: 8px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 427px) {
+  .website-list {
+    width: 100%;
+  }
+
+  .website-list,
+  .search-website {
+    width: 99%;
+  }
+  .website-list img {
+    height: 40px;
+    width: 40px;
+  }
+  .website-name {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+
+  .website-type {
+    font-size: 10px;
+  }
+
+  .manage-button {
+    padding: 8px;
+    font-size: 13px;
+  }
+}

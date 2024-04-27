@@ -64,7 +64,7 @@ export default function LoginForm() {
 
   return (
     <div className="grid place-items-center h-screen login-main">
-      <div className="shadow-lg p-10 rounded-lg border-y-4 border-gray-800">
+      <div className="shadow-lg p-10 rounded-lg border-y-4 border-gray-800 loginForm">
         <h1 className="text-xl font-bold pb-10 AdminLogin">Dashboard login:</h1>
 
         <form
@@ -93,7 +93,7 @@ export default function LoginForm() {
             className="md:w-96"
           />
 
-          <button className="bg-gray-800 text-white font-bold cursor-pointer px-6 py-3 mt-0"> Login</button>
+          <button className="bg-gray-800 text-white font-bold cursor-pointer px-6 py-3 mt-0 loginButton"> Login</button>
           {error && <div className="bg-red-500 text-white w-auto text-sm py-3 px-3 rounded-md mt-0 text-center">{error}</div>}
         </form>
       </div>

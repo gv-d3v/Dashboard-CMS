@@ -94,7 +94,7 @@ export default function FileManager({ website }) {
       {website ? null : (
         <header className="bg-white shadow">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">File Manager</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 ml-5">File Manager</h1>
           </div>
         </header>
       )}
@@ -146,7 +146,7 @@ export default function FileManager({ website }) {
                       {item.replace(`${currentFilePath}/`, "")}
                     </button>
                     <button
-                      className="ml-auto bg-red-600 text-white px-4 py-0.5 rounded-md hover:bg-red-500"
+                      className="ml-auto bg-red-600 text-white px-4 py-0.5 rounded-md hover:bg-red-500 fileManagerDelButt"
                       onClick={() => {
                         setCurrentItem(item);
                         setOpenDelete(true);

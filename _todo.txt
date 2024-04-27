@@ -1,8 +1,6 @@
 - TO DO
-    - Fix typos
     - Version control or revision history for changes made to the website
     - Add full refresh after edit user from profile
-    - Edit CSS for mobiles and tablets
     - Media images slider
     - Media preview show all images
     - Media preview add delete
@@ -15,6 +13,11 @@
 - MAJOR TO DO
     - When deleting items in file manager update database
     - Password reset for other users
+
+- Edit CSS for mobiles and tablets    
+    - Add accomm placeholder smaller font
+    - Multiple images add doesnt work on phone
+    - Edit content add images span maring 
 
 - DONE
     - Add JWT Token expiry - DONE

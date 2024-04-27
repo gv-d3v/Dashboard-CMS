@@ -10,7 +10,7 @@ export default function Profile({ setOpenProfile, cancelButtonRef, profile, from
   const worked = Math.floor(difference / (1000 * 60 * 60 * 24) + 1);
 
   return (
-    <div className="inline-block p-5 sm:flex md:flex lg:flex">
+    <div className="inline-block p-5 sm:flex md:flex lg:flex user-profile-modal-content">
       <div className="grid place-items-center mb-auto mt-auto ml-auto mr-auto">
         <img
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"

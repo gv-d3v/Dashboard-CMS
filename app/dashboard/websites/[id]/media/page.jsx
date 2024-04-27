@@ -30,7 +30,7 @@ export default function WebsiteMedia() {
     /*setTimeout(() => {
       setComponentsLoad(true);
     }, 1000);*/
-    console.log(allAccommodations);
+    (allAccommodations);
   }, []);
 
   return (

@@ -57,7 +57,7 @@ export default function AddURLModal({ openURLModal, setOpenURLModal, addImageUrl
                       >
                         Add image URL:
                       </Dialog.Title>
-                      <div className="mt-2 w-auto">
+                      <div className="mt-5 sm:mt-2 w-auto">
                         <input
                           className="w-full"
                           type="text"
@@ -84,10 +84,27 @@ export default function AddURLModal({ openURLModal, setOpenURLModal, addImageUrl
                   >
                     {addImageUrl !== "/user.png" && addImageUrl !== "/addImage.png" ? "Change" : "Add"}
                   </button>
+
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto ml-auto sm:mt-0"
+                    onClick={handleUploadButton}
+                  >
+                    <PrepareUpload
+                      uploadRef={uploadRef}
+                      setAddImageUrl={setAddImageUrl}
+                      setOpenURLModal={setOpenURLModal}
+                      file={file}
+                      setFile={setFile}
+                    />
+                    Upload
+                  </button>
+
                   {addImageUrl[0] !== "/user.png" && addImageUrl !== "/addImage.png" ? (
                     <button
                       type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                      className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-3
+                      sm:mt-0"
                       onClick={() => {
                         setOpenURLModal(false);
                         setAddImageUrl("/addImage.png");
@@ -106,20 +123,6 @@ export default function AddURLModal({ openURLModal, setOpenURLModal, addImageUrl
                     ref={cancelButtonRef}
                   >
                     Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto mr-auto"
-                    onClick={handleUploadButton}
-                  >
-                    <PrepareUpload
-                      uploadRef={uploadRef}
-                      setAddImageUrl={setAddImageUrl}
-                      setOpenURLModal={setOpenURLModal}
-                      file={file}
-                      setFile={setFile}
-                    />
-                    Upload
                   </button>
                 </div>
               </Dialog.Panel>

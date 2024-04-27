@@ -1,0 +1,84 @@
+.AdminLogin {
+  font-size: 23px;
+  text-align: center;
+}
+
+.regForm input {
+  width: auto;
+}
+
+.formSelect {
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
+  background-color: rgb(244 244 245 / 0.4);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.formSelect option {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17px;
+}
+
+.formSelect .defaultOption {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+.formSelect .otherOptions {
+  color: black;
+}
+
+@media screen and (max-width: 639px) {
+  .changePassButt {
+    margin-top: 0 !important;
+  }
+  .user-profile-modal {
+    width: 60%;
+    margin-top: 60px;
+  }
+  .user-profile-modal-content {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .user-profile-modal {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .user-profile-modal {
+    width: 80%;
+  }
+  .loginForm {
+    width: 90%;
+  }
+  .regForm input,
+  .regForm select,
+  .changePassButt {
+    width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .user-profile-modal {
+    width: 90%;
+  }
+  .loginForm {
+    padding: 50px 25px !important;
+  }
+  .AdminLogin {
+    font-size: 18px !important;
+  }
+
+  .formPadding {
+    padding-left: 0px !important;
+  }
+}

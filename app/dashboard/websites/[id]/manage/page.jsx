@@ -138,7 +138,7 @@ export default function Manage() {
                     <span>{accommodation.name}</span>
                     <div className="website-buttons">
                       <button
-                        className="py-2 px-7 mr-5 rounded-lg bg-yellow-400 text-sm font-medium text-white buttonShadow"
+                        className="py-2 px-7 mr-5 rounded-lg bg-yellow-400 text-sm font-medium text-white buttonShadow editAccButton"
                         onClick={e => editAccomm(accommodation._id)}
                       >
                         <PencilSquareIcon
@@ -149,7 +149,7 @@ export default function Manage() {
                       </button>
 
                       <button
-                        className="py-2 px-5 mr-5 rounded-lg bg-red-600 text-sm font-medium text-white buttonShadow mt-2.5 md:mt-0 lg:mt-0"
+                        className="py-2 px-5 mr-5 rounded-lg bg-red-600 text-sm font-medium text-white buttonShadow mt-2.5 md:mt-0 lg:mt-0 deleteAccButton"
                         onClick={e => {
                           setOpenDelete(true);
                           setAccommId(accommodation._id);

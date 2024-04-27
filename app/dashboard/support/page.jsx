@@ -43,10 +43,10 @@ export default function Support() {
       <div className="min-h-full">
         <header className="bg-white shadow">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 ">Support</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 ml-5">Support</h1>
           </div>
         </header>
-        <main className="mb-24 mt-1">
+        <main className="mb-24 mt-1 support-main">
           <div className="max-w-screen-xl mx-auto px-5 bg-white min-h-sceen">
             <div className="flex flex-col items-center">
               <h2 className="font-bold text-5xl mt-5 tracking-tight">FAQ</h2>
@@ -84,7 +84,7 @@ export default function Support() {
                 );
               })}
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center support-div-msg">
               <p className="text-neutral-500 text-xl mt-10 text-center">You were unable to find answer to your question?</p>
               <p className="text-neutral-500 text-xl mt-4 text-center">
                 Please refer to the contact information below to reach out to us directly by using one of the available methods.

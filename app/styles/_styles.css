@@ -1,7 +1,7 @@
 @import "./main-elements/_main-elements.css";
 @import "./colors.css";
 @import "./dasboardMenu.css";
-@import "./formLayout.css";
+@import "./team/user.css";
 @import "./loading.css";
 @import "./onlineUser.css";
 @import "./shadowing.css";

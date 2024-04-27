@@ -12,30 +12,97 @@
 }
 
 .support-row {
-    width: 100%;
-    display: flex;
+  width: 100%;
+  display: flex;
 }
-.support-row img{
-    width: 90px;
-    height: 90px;
-    margin-left: 20px;
+.support-row img {
+  width: 90px;
+  height: 90px;
+  margin-left: 20px;
 }
 
-.support-row p{
-    font-size: 30px;
-    margin: auto 40px;
-    font-weight: 600;
-    color: var(--dark);
+.support-row p {
+  font-size: 30px;
+  margin: auto 40px;
+  font-weight: 600;
+  color: var(--dark);
 }
 
 .support-col {
   width: 50%;
 }
 
-.support-mail{
-    font-size: 25px !important;
+.support-mail {
+  font-size: 25px !important;
 }
 
-.support-desc{
+.support-desc {
   font-size: 15px !important;
+}
+
+.support-row img {
+  margin-left: 50px;
+}
+
+.support-col div form {
+  margin-left: auto;
+  margin-right: 50px;
+}
+
+@media screen and (max-width: 1084px) {
+  .support-row p {
+    font-size: 20px !important;
+  }
+
+  .support-row img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .support-col div form {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 984px) {
+  .support-col div form {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 884px) {
+  .support-row,
+  .support-col {
+    display: grid;
+    width: 100%;
+  }
+
+  .support-row img,
+  .support-col div form,
+  .support-row p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .support-row img {
+    margin-bottom: 20px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .support-row p {
+    text-align: center;
+  }
+
+  .support-col div form {
+    width: auto;
+  }
+
+  .support-main details p {
+    font-size: 14px;
+  }
+
+  .support-div-msg p {
+    font-size: 18px !important;
+  }
 }

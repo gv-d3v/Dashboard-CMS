@@ -1,4 +1,4 @@
-.menu-pos{
+.menu-pos {
   margin-top: -30px;
   margin-bottom: -30px;
 }
@@ -38,13 +38,18 @@
     top: 79%;
     border-radius: 12px;
   }
-  
-.centeredMenu h1 {
+
+  .centeredMenu h1 {
     color: white;
     font-size: 1.1rem;
   }
   .imageMenu {
     width: 180px;
     top: 50%;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .dashboardMenu {
+    padding-top: 40px;
   }
 }

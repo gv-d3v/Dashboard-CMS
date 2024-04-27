@@ -16,6 +16,8 @@ export default function WebsitesLayout({ children }) {
   const [headerS, setheaderS] = useState("");
   const [enableScroll, setEnableScroll] = useState(false);
 
+  const [mobile, setMobile] = useState("");
+
   //GET USERS
   const fetchData = async () => {
     const data = await GetWebsites();
@@ -41,19 +43,19 @@ export default function WebsitesLayout({ children }) {
           className="min-h-full"
           key={index}
         >
-          <header className={`bg-white shadow fixed w-full z-10 ${headerS}`}>
+          <header className={`bg-white shadow fixed w-full z-10 ${headerS} ${mobile}`}>
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 website-h">
-              <h1 className={`text-3xl font-bold tracking-tight text-gray-900`}>{website.name}</h1>
+              <h1 className={`text-3xl font-bold tracking-tight text-gray-900 ml-5`}>{website.name}</h1>
             </div>
             <SideBar
               id={id}
               pathname={pathname}
+              mobile={mobile}
+              setMobile={setMobile}
             />
           </header>
           <Space space={"84px"} />
-          <main className="popupleft">
-          {children}
-          </main>
+          <main className="popupleft">{children}</main>
         </div>
       );
     }

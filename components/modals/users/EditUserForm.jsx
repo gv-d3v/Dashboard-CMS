@@ -150,7 +150,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
   };
 
   return (
-    <div className="inline-block px-5 pb-5 sm:flex md:flex lg:flex">
+    <div className="inline-block px-5 pb-5 sm:flex md:flex lg:flex formPadding">
       <div className="grid place-items-center addImage my-auto  ml-auto mr-4 w-full">
         <img
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
@@ -246,7 +246,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
             {currentUser?.email === origEmail && !changePassword ? (
               <button
                 type="button"
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto changePassButt"
                 onClick={e => handleChangePass(e)}
               >
                 Change password
@@ -256,7 +256,7 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
             {currentUser?.email === origEmail ? null : (
               <button
                 type="button"
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto changePassButt"
                 ref={cancelButtonRef}
               >
                 Reset Password

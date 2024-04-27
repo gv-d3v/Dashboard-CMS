@@ -84,13 +84,13 @@ export default function Dashboard() {
     <div className="min-h-full">
       <header className="bg-white shadow">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 ml-5">Dashboard</h1>
         </div>
       </header>
       <main className="mt-0.5">
         <div className="bg-gray-100 h-fit">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl py-4 sm:py-4 lg:max-w-none lg:py-11">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 dashboardMenu">
+            <div className="mx-auto max-w-2xl pt-4 sm:pt-4 lg:max-w-none lg:py-11">
               <div className="lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 menu-pos">
                 {menu.map((menuItem, index) => (
                   <div

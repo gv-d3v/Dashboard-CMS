@@ -1,4 +1,4 @@
-button.add-content:hover{
+button.add-content:hover {
   scale: 1.01 !important;
 }
 
@@ -43,7 +43,7 @@ button.add-content:hover{
 /*DROPDOWN*/
 .dropdown-menu {
   position: absolute;
-  top: 126px;
+  top: 220px;
   right: 5px;
   border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -134,7 +134,8 @@ button.add-content:hover{
 .form-description,
 .form-description::placeholder,
 ::-moz-placeholder,
-.form-description::-webkit-input-placeholder, .added-images span {
+.form-description::-webkit-input-placeholder,
+.added-images span {
   font-size: 14px;
   opacity: 0.8;
 }
@@ -154,3 +155,133 @@ button.add-content:hover{
   width: 100%;
 }
 
+.add-image-cont {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .dropdown-menu {
+    top: 230px;
+  }
+  .accommodation-modal {
+    width: 95%;
+    margin: 10px;
+  }
+  .accommodation-modal h3 {
+    text-align: center;
+  }
+  .form-description,
+  .form-description input {
+    width: auto !important;
+  }
+  .accommodation-field-position {
+    display: grid !important;
+  }
+
+  .accommodation-form-position,
+  .accommodationForm,
+  .form-description-position {
+    width: 100%;
+    padding: 2px 0 !important;
+  }
+
+  .form-description-position input {
+    padding-left: 15px !important;
+  }
+
+  .input-margin {
+    margin: 0;
+  }
+
+  .accommodation-field-position {
+    margin-bottom: -10px;
+  }
+
+  .form-description-position.middle {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 921px) {
+  .content-list {
+    padding-right: 0 !important;
+  }
+
+  .website-buttons {
+    width: 185px;
+    position: absolute;
+    right: 10px;
+  }
+
+  .deleteAccButton {
+    margin-top: 5px !important;
+  }
+}
+@media screen and (max-width: 800px) {
+  .content-list span {
+    width: 150px;
+  }
+
+  .website-buttons {
+    right: 0px;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .added-images {
+    display: block;
+  }
+  .possition-images,
+  .possition-images img {
+    margin: auto;
+  }
+
+  .form-description-position input,
+  .form-description-position input::placeholder,
+  .form-description-position input::-webkit-input-placeholder {
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .content-list span {
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .dropdown-menu {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: auto !important;
+  }
+  .content-list {
+    padding-left: 10px !important;
+  }
+  .content-list span {
+    width: 100px;
+  }
+  .accommodation-modal {
+    padding: 10px 5px 0px 5px;
+  }
+
+  .form-description-position input {
+    width: 100% !important;
+  }
+
+  .deleteAccButton,
+  .editAccButton {
+    display: grid;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    margin-right: 30px !important;
+    margin-left: auto !important;
+  }
+
+  .deleteAccButton span,
+  .editAccButton span {
+    display: none !important;
+  }
+}

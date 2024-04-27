@@ -7,3 +7,29 @@
   width: 200px !important;
   transition: width 0.3s ease;
 }
+
+@media screen and (max-width: 698px) {
+  .header-scroll {
+    width: 0px !important;
+    transition: width 0.3s ease;
+  }
+
+  .nav-scroll {
+    width: 100% !important;
+  }
+
+  .header-scroll h1 {
+    margin-left: -200px;
+    visibility: hidden;
+  }
+
+  .header-scroll.mobile {
+    width: 200px !important;
+    transition: 0.3s ease;
+  }
+  .header-scroll.mobile h1 {
+    visibility: visible;
+    margin-left: 0;
+    transition: 0.3s ease;
+  }
+}
