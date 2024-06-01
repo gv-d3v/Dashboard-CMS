@@ -15,6 +15,15 @@
   padding: 2px;
 }
 
+.media-images-container img{
+  display: flex;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 2px;
+  height: 200px;
+  overflow: visible;
+}
+
 .media-images-container img:hover {
   transition-property: all;
   transition-property: transform;

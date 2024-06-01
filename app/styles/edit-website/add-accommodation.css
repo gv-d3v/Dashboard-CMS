@@ -71,6 +71,15 @@ button.add-content:hover {
   background: rgba(0, 0, 0, 0.1);
 }
 
+.content-list img{
+  width: 117px;
+  height: 80px;
+}
+
+.accomList{
+  padding-bottom: 20px;
+}
+
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;

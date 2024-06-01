@@ -108,7 +108,7 @@ export default function Manage() {
   return (
     <div className="bg-gray-100 h-auto min-h-screen pt-1">
       <div className="mx-auto max-w-2xllg:max-w-none">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 accomList">
           <button
             className="add-content shadow"
             onClick={() => setOpenAdd(true)}

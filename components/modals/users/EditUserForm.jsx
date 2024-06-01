@@ -214,10 +214,10 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
                 Administrator
               </option>
               <option
-                value={"Pomocni radnik"}
+                value={"Employee"}
                 className="otherOptions"
               >
-                Pomocni radnik
+                Employee
               </option>
             </select>
 

@@ -1,24 +1,25 @@
 - TO DO
-    - Version control or revision history for changes made to the website
     - Add full refresh after edit user from profile
     - Media images slider
-    - Media preview show all images
+    - Media preview show all images at the bottom of preview
     - Media preview add delete
     - Change view to thumbnails, when hover show edit, delete and maybe name for Website page
     - Different message when no content and when searched conntent does not match for Website page (part of website settings)
     - Settings page for Website page
     - Create json and DB entry for two separate languanges
+    - Phone loading possition
+    - Side bar button possition
+    - Dashboard menu different view, adjust in settings
 
 
 - MAJOR TO DO
+    - Version control or revision history for changes made to the website
     - When deleting items in file manager update database
     - Password reset for other users
 
 - Edit CSS for mobiles and tablets    
-    - Add accomm placeholder smaller font
-    - Multiple images add doesnt work on phone
-    - Edit content add images span maring 
-
+    
+--------------------------------------------------------------------
 - DONE
     - Add JWT Token expiry - DONE
     - Edit user image - DONE
