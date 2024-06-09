@@ -141,6 +141,7 @@ export default function Manage() {
                       width={240}
                       height={160}
                       quality={100}
+                      priority={(index+1)<5 ? true : false}
                       alt={`Accommodation image ${index + 1}`}
                       src={
                         accommodation.images

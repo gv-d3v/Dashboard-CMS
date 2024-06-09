@@ -15,6 +15,7 @@ const WebsiteList = ({ websites }) => {
                     width={50}
                     height={50}
                     alt="website-image-logo"
+                    priority={true}
                   />
                   <div className="name-type-section">
                     <span className="website-name">{website.name}</span>

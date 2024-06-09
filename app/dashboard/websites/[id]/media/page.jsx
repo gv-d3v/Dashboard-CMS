@@ -42,27 +42,28 @@ export default function WebsiteMedia() {
     <div className="media-container h-screen">
       {!loading &&
         allAccommodations &&
-        allAccommodations.slice(0, itemsShown).map((accomm, index) => {
+        allAccommodations.slice(0, itemsShown).map((accomm, outerIndex) => {
           {
             !accLength && setAccLength(allAccommodations.length);
           }
           return (
             <div
               className="shadow"
-              key={index + 1}
+              key={outerIndex + 1}
             >
               <div className="media-h1-container">
                 {" "}
                 <h1>{accomm.name}</h1>
               </div>
               <div className="media-images-container">
-                {accomm.images.map((image, index) => {
+                {accomm.images.map((image, innerIndex) => {
                   return (
                     <Image
                       width={330}
                       height={200}
+                      priority={outerIndex + 1 <= 4 ? true : false}
                       className="cursor-pointer"
-                      key={index + 1}
+                      key={innerIndex + 1}
                       src={image.downloadURL}
                       alt={`This image is no longer available`}
                       onClick={e => {
