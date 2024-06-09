@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 export default function Support() {
@@ -97,7 +98,9 @@ export default function Support() {
               <div className="support-row">
                 <div className="support-col mt-20">
                   <div className="support-row">
-                    <img
+                    <Image
+                    height={200}
+                    width={200}
                       src="/call3.png"
                       alt="Call center"
                     />
@@ -107,7 +110,9 @@ export default function Support() {
                     </div>
                   </div>
                   <div className="support-row mt-10">
-                    <img
+                    <Image
+                    height={200}
+                    width={200}
                       src="/mail.png"
                       alt="Support email"
                       className="ml-50"

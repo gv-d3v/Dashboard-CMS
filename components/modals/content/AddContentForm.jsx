@@ -9,6 +9,9 @@ import handleUpload from "../../upload/handleUpload";
 import Loading from "@/app/loading";
 import dynamic from "next/dynamic";
 import TestFieldsContentReg from "@/tools/testFieldsContentReg";
+import AddContentStage1 from "./stages/AddContentStage1";
+import AddContentStage3 from "./stages/AddContentStage3";
+import AddContentStage2 from "./stages/AddContentStage2";
 
 const DynamicLoadLocationDropdown = dynamic(() => import("../../dropdowns/LocationDropdown"), {
   ssr: false,
@@ -17,7 +20,7 @@ const DynamicLoadPrepareUpload = dynamic(() => import("../../upload/prepareUploa
   ssr: false,
 });
 
-export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData }) {
+export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData, progress, setProgress, setStage1Pass }) {
   const router = useRouter();
   const { id } = useParams();
   const websiteId = id;
@@ -28,12 +31,10 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
 
   //Search states and refs
   const destMenuRef = useRef(null);
-  const searchRef = useRef(null);
   const uploadRef = useRef(null);
 
   const [name, setName] = useState("");
 
-  const [popupLeft, setPopupLeft] = useState(0);
   const [destination, setDestination] = useState("");
   const [showDestinationDrop, setShowDestinationDrop] = useState("");
   const [searchedDestination, setSearchedDestination] = useState([]);
@@ -44,6 +45,8 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
   const [guests, setGuests] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+
+  const [amenities, setAmenities] = useState([]);
 
   const [previewImages, setPreviewImages] = useState();
 
@@ -77,14 +80,6 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
     setShowDestinationDrop("");
   };
 
-  //POPUP POSITION
-  const handleWindowResize = () => {
-    if (searchRef.current) {
-      const searchRect = searchRef.current.getBoundingClientRect();
-      setPopupLeft(searchRect.left);
-    }
-  };
-
   //UPLOAD IMAGES BUTTON
   const handleUploadButton = () => {
     uploadRef.current.click();
@@ -103,7 +98,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
   const handleSubmit = async e => {
     e.preventDefault();
 
-    //TEST FIELDS
+    //FINAL TEST FIELDS
     if (!TestFieldsContentReg(name, destination, city, address, rooms, guests, price, description, previewImages, setError)) {
       return;
     }
@@ -130,6 +125,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
           guests,
           price,
           description,
+          amenities,
           images: images.photos,
         }),
       });
@@ -141,6 +137,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
         setOpenAdd(false);
         fetchData();
         setTimeout(() => {
+          setProgress(1);
           router.refresh();
         }, 500);
       } else {
@@ -154,159 +151,85 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
     }
   };
 
+  const handleNextStage = e => {
+    e.preventDefault();
+    /* setProgress((progress += 1));*/
+    if (progress === 1) {
+      if (!TestFieldsContentReg(name, destination, city, address, rooms, guests, price, description, true, setError)) {
+        return;
+      }
+      setProgress((progress += 1));
+      setStage1Pass(true);
+    } else if (progress === 2) {
+      setProgress((progress += 1));
+    }
+  };
+
   useEffect(() => {
     applyFilters();
-    handleWindowResize();
-    window.addEventListener("resize", handleWindowResize);
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
   }, [destination]);
 
   return (
-    <div className="inline-block p-5 flex">
+    <div className="p-5 flex">
       <div className="grid place-items-center accommodation-form-position">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-3 accommodationForm"
         >
-          <div className="form-description-position single-input">
-            <span className="form-description">Name</span>
-            <input
-              maxLength={24}
-              type="text"
-              placeholder="Name of accommodation"
-              onChange={e => {
-                setName(e.target.value);
-                setError("");
-              }}
+          {progress === 1 && (
+            <AddContentStage1
+              destination={destination}
+              setName={setName}
+              setError={setError}
+              handleSearch={handleSearch}
+              setCity={setCity}
+              setAddress={setAddress}
+              setRooms={setRooms}
+              setGuests={setGuests}
+              setPrice={setPrice}
+              setDescription={setDescription}
+              setStage1Pass={setStage1Pass}
+              name={name}
+              city={city}
+              address={address}
+              rooms={rooms}
+              guests={guests}
+              price={price}
+              description={description}
             />
-          </div>
+          )}
 
-          <div className="accommodation-field-position">
-            <div className="form-description-position middle">
-              <span className="form-description">Country</span>
-              <input
-                className="input-margin"
-                type="text"
-                placeholder="Country"
-                onChange={e => {
-                  handleSearch(e);
-                  setError("");
-                }}
-                value={destination}
-              />
-            </div>
-            <div className="form-description-position middle">
-              <span className="form-description ">City</span>
-              <input
-                className="input-margin"
-                type="text"
-                placeholder="City"
-                onChange={e => setCity(e.target.value)}
-              />
-            </div>
-            <div className="form-description-position middle">
-              <span className="form-description ">Address</span>
-              <input
-                type="text"
-                placeholder="Address"
-                onChange={e => setAddress(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="accommodation-field-position">
-            <div className="form-description-position middle">
-              <span className="form-description">Rooms</span>
-              <input
-                className="input-margin"
-                type="number"
-                placeholder="Number of rooms"
-                onChange={e => {
-                  setRooms(e.target.value);
-                  setError("");
-                }}
-              />
-            </div>
-            <div className="form-description-position middle">
-              <span className="form-description">Guests</span>
-              <input
-                className="input-margin"
-                type="number"
-                placeholder="Number of guests"
-                onChange={e => {
-                  setGuests(e.target.value);
-                  setError("");
-                }}
-              />
-            </div>{" "}
-            <div className="form-description-position middle">
-              <span className="form-description">Price</span>
-              <input
-                type="number"
-                placeholder="Price per day"
-                onChange={e => {
-                  setPrice(e.target.value);
-                  setError("");
-                }}
-              />
-            </div>
-          </div>
-          <div className="form-description-position single-input">
-            <span className="form-description">Description</span>
-            <textarea
-              type="text"
-              placeholder="Short description about your accommodation"
-              onChange={e => {
-                setDescription(e.target.value);
-                setError("");
-              }}
+          {progress === 2 && (
+            <AddContentStage2
+              amenities={amenities}
+              setAmenities={setAmenities}
             />
-          </div>
+          )}
 
-          <div
-            className="add-images"
-            onClick={handleUploadButton}
-          >
-            <div className="added-images">
-              {previewImages ? (
-                previewImages.map((photo, index) => {
-                  return (
-                    <div
-                      key={index + 1}
-                      className="possition-images"
-                    >
-                      <img
-                        src={photo}
-                        alt="Add image"
-                      />
-                    </div>
-                  );
-                })
-              ) : (
-                <div className="add-image-cont">
-                  <div className="possition-images">
-                    <span>Max size of image 2MB</span>
-                    <img
-                      className="add-image-button"
-                      src={`/addImages.png`}
-                      alt="Add image"
-                    />
-                    <span>Upload up to 6 images</span>
-                  </div>
-                </div>
-              )}
-            </div>
-            {previewImages ? <span className="added-images-num">{`${previewImages.length} / 6`}</span> : null}
-          </div>
+          {progress === 3 && (
+            <AddContentStage3
+              handleUploadButton={handleUploadButton}
+              previewImages={previewImages}
+            />
+          )}
 
           {error && <div className="bg-red-500 text-white w-auto text-sm py-2 px-3 rounded-md mt-0 text-center">{error}</div>}
           <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-            <button className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto">
-              Add
-            </button>
-            {previewImages ? (
+            {progress === 3 ? (
+              <button className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto">
+                Add
+              </button>
+            ) : (
+              <button
+                className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto"
+                onClick={e => {
+                  handleNextStage(e);
+                }}
+              >
+                Next
+              </button>
+            )}
+            {previewImages && progress === 3 && (
               <button
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:mt-0 sm:ml-3 sm:w-auto"
                 onClick={() => {
@@ -316,13 +239,29 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
               >
                 Remove images
               </button>
-            ) : null}
+            )}
+            {progress > 1 && (
+              <button
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-yellow-400 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:mt-0 sm:ml-3 sm:w-auto"
+                onClick={e => {
+                  e.preventDefault();
+                  setProgress((progress -= 1));
+                  setError("");
+                }}
+              >
+                Previous
+              </button>
+            )}
             <button
               type="button"
               className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
               onClick={() => {
                 setOpenAdd(false);
-                emptyLocalStorage();
+                setTimeout(() => {
+                  emptyLocalStorage();
+                  setProgress(1);
+                  setStage1Pass(false);
+                }, 500);
               }}
               ref={cancelButtonRef}
             >
@@ -337,7 +276,6 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
         destMenuRef={destMenuRef}
         handleDestinationHide={handleDestinationHide}
         setDestination={setDestination}
-        popupLeft={popupLeft}
         searchedDestination={searchedDestination}
       />
 
@@ -347,6 +285,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData 
         file={file}
         setFile={setFile}
         mutliple={true}
+        setError={setError}
       />
 
       {loading ? <Loading /> : null}

@@ -1,0 +1,84 @@
+.progress-tracker {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 260px;
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+
+.connector {
+  width: 100px;
+  height: 3px;
+  background-color: var(--dark-trans);
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.bullet {
+  width: 20px;
+  height: 20px;
+  background-color: var(--dark-trans);
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.bullet.active,
+.connector.active {
+  background-color: var(--purple-dark);
+  -webkit-transition: background-color 0.3s linear;
+  -ms-transition: background-color 0.3s linear;
+  transition: background-color 0.3s linear;
+}
+
+.bullet1span,
+.bullet2span,
+.bullet3span {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+  text-align: center;
+  visibility: hidden;
+}
+.bullet1span {
+  right: 240px;
+}
+.bullet3span {
+  left: 240px;
+}
+
+.bullet1span.active,
+.bullet2span.active,
+.bullet3span.active {
+  visibility: visible;
+}
+
+@media screen and (max-width: 1024px) {
+  .progress-tracker {
+    margin-top: 40px;
+  }
+  .bullet1span,
+  .bullet2span,
+  .bullet3span {
+    top: 80px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .progress-tracker {
+    width: 200px;
+  }
+  .connector {
+    width: 70px;
+  }
+
+  .bullet1span,
+  .bullet3span {
+    right: 0;
+    left: 0;
+  }
+}

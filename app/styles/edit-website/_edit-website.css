@@ -4,4 +4,6 @@
 @import "./side-bar.css";
 @import "./add-accommodation.css";
 @import "./media.css";
-@import "./side-bar-tabs/_side-bar-tabs.css"
+@import "./side-bar-tabs/_side-bar-tabs.css";
+@import "./dropdown.css";
+@import "./amenities.css"

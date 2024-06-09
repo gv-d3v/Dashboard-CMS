@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export default function PrepareUpload({ uploadRef, setAddImageUrl, setOpenURLModal, file, setFile, mutliple }) {
+export default function PrepareUpload({ uploadRef, setAddImageUrl, setOpenURLModal, file, setFile, mutliple, setError }) {
   useEffect(() => {
     //SINGLE FILE UPLOAD
     if (file && !mutliple) {
@@ -31,6 +31,7 @@ export default function PrepareUpload({ uploadRef, setAddImageUrl, setOpenURLMod
         reader.readAsDataURL(imageFile);
       });
     }
+    setError && setError("")
   }, [file, setAddImageUrl, setOpenURLModal]);
 
   const handlePrepareUpload = event => {

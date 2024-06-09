@@ -10,6 +10,7 @@
 @import "./support/support.css";
 @import "./file-manager/file-manager.css";
 @import "./settings/settings.css";
+@import "./tools/_tools.css";
 
 /*HIDE NUMBER FIELDS ARROWS*/
 

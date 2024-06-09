@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import { UserPlusIcon, PencilSquareIcon, TrashIcon, ArrowPathIcon, UserIcon } from "@heroicons/react/24/outline";
 import Loading from "@/app/loading";
+import Image from "next/image";
 
 const AddModal = dynamic(() => import("@/components/modals/users/AddUserModal"), {
   ssr: false,
@@ -104,7 +105,7 @@ export default function Team() {
 
   const deleteUserFBImages = async () => {
     const { deleteFiles } = await import("@/lib/storage");
-    deleteFiles(userFBImages);
+    userFBImages && deleteFiles(userFBImages);
     setUserFBImages("");
   };
 
@@ -222,15 +223,29 @@ export default function Team() {
                     className="flex justify-between gap-x-6 py-5 pl-6 "
                   >
                     <div className="flex min-w-0 gap-x-4 my-auto">
-                      <img
-                        className={
-                          currentUser?.email === person.email
-                            ? "h-12 w-12 flex-none rounded-full bg-gray-50 activeBorder"
-                            : "h-12 w-12 flex-none rounded-full bg-gray-50"
-                        }
-                        src={typeof person.images[0] === "object" ? person.images[0].downloadURL : person.images}
-                        alt={`Image of ${person.name}`}
-                      />
+                      {typeof person.images[0] === "object" ? (
+                        <Image
+                          className={
+                            currentUser?.email === person.email
+                              ? "h-12 w-12 flex-none rounded-full bg-gray-50 activeBorder"
+                              : "h-12 w-12 flex-none rounded-full bg-gray-50"
+                          }
+                          height={48}
+                          width={48}
+                          src={person.images[0].downloadURL}
+                          alt={`Image of ${person.name}`}
+                        />
+                      ) : (
+                        <img
+                          className={
+                            currentUser?.email === person.email
+                              ? "h-12 w-12 flex-none rounded-full bg-gray-50 activeBorder"
+                              : "h-12 w-12 flex-none rounded-full bg-gray-50"
+                          }
+                          src={person.images ? person.images : "/user.png"}
+                          alt={`Image of ${person.name}`}
+                        />
+                      )}
 
                       <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>

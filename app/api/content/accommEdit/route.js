@@ -11,7 +11,7 @@ export async function POST(req) {
   }
 
   try {
-    const { accommId, name, destination, city, address, rooms, guests, price, description, images } = await req.json();
+    const { accommId, name, destination, city, address, rooms, guests, price, description, amenities, images } = await req.json();
 
     await connectMongoDB();
 
@@ -25,6 +25,7 @@ export async function POST(req) {
         guests,
         price,
         description,
+        amenities,
         images,
       },
     };

@@ -23,9 +23,10 @@ export default function Dashboard() {
       imageSrc: "/website.png",
       imageAlt: "Edit Website option.",
       href: "dashboard/websites",
-      height: 50,
-      width: 50,
+      height: 200,
+      width: 200,
       priority: true,
+      quality:100,
     },
     {
       name: "Edit Team",
@@ -33,9 +34,10 @@ export default function Dashboard() {
       imageSrc: "/team.png",
       imageAlt: "Edit Team option.",
       href: "dashboard/team",
-      height: 50,
-      width: 50,
-      priority: false,
+      height: 200,
+      width: 200,
+      priority: true,
+      quality:100,
     },
     {
       name: "File Manager",
@@ -43,9 +45,10 @@ export default function Dashboard() {
       imageSrc: "/file.png",
       imageAlt: "File Manager option.",
       href: "dashboard/file-manager",
-      height: 50,
-      width: 50,
-      priority: false,
+      height: 200,
+      width: 200,
+      priority: true,
+      quality:100,
     },
     {
       name: "Settings",
@@ -53,9 +56,10 @@ export default function Dashboard() {
       imageSrc: "/settings.png",
       imageAlt: "Settings option.",
       href: "dashboard/settings",
-      height: 50,
-      width: 50,
-      priority: false,
+      height: 200,
+      width: 200,
+      priority: true,
+      quality:100,
     },
     {
       name: "Contact Support",
@@ -63,9 +67,10 @@ export default function Dashboard() {
       imageSrc: "/support.png",
       imageAlt: "Contact Support option.",
       href: "dashboard/support",
-      height: 50,
-      width: 50,
-      priority: false,
+      height: 200,
+      width: 200,
+      priority: true,
+      quality:100,
     },
     {
       name: "Sign Out",
@@ -73,9 +78,10 @@ export default function Dashboard() {
       imageSrc: "/LogoutPNG.png",
       imageAlt: "Sign Out option.",
       href: `#`,
-      height: 50,
-      width: 50,
-      priority: false,
+      height: 200,
+      width: 200,
+      priority: true,
+      quality:100,
       function: handleSignOut,
     },
   ];
@@ -108,6 +114,7 @@ export default function Dashboard() {
                           onClick={menuItem.function ? menuItem.function : null}
                           alt={menuItem.imageAlt}
                           priority={menuItem.priority}
+                          quality={menuItem.quality}
                         />
                         <div className="centeredMenu">
                           <h1 className="">{menuItem.name}</h1>

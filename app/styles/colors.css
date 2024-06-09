@@ -1,7 +1,9 @@
 :root {
   --dark: rgb(31, 41, 55);
   --dark-hover: rgba(31, 41, 55, 0.9);
+  --dark-trans: rgba(31, 41, 55, 0.8);
   --text: rgb(209, 213, 219);
+  --purple-dark: rgb(100, 101, 239);
 }
 
 .bg-yellow-400 {

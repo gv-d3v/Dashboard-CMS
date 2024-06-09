@@ -5,11 +5,13 @@ import { useParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { debounce } from "lodash";
 import countries from "@/db/Countries";
-
 import handleUpload from "../../upload/handleUpload";
 import Loading from "@/app/loading";
 import TestFieldsContentReg from "@/tools/testFieldsContentReg";
 import { deleteFiles } from "@/lib/storage";
+import EditContentStage1 from "./stages/EditContentStage1";
+import EditContentStage3 from "./stages/EditContentStage3";
+import EditContentStage2 from "./stages/EditContentStage2";
 
 const DynamicLoadLocationDropdown = dynamic(() => import("../../dropdowns/LocationDropdown"), {
   ssr: false,
@@ -18,7 +20,7 @@ const DynamicLoadPrepareUpload = dynamic(() => import("../../upload/prepareUploa
   ssr: false,
 });
 
-export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchData, editAccommodation }) {
+export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchData, editAccommodation, progress, setProgress, setStage1Pass }) {
   const router = useRouter();
   const { id } = useParams();
 
@@ -35,7 +37,6 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
 
   const [name, setName] = useState(editAccommodation.name);
 
-  const [popupLeft, setPopupLeft] = useState(0);
   const [destination, setDestination] = useState(editAccommodation.destination);
   const [showDestinationDrop, setShowDestinationDrop] = useState("");
   const [searchedDestination, setSearchedDestination] = useState([]);
@@ -48,6 +49,8 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
   const [description, setDescription] = useState(editAccommodation.description);
 
   const [previewImages, setPreviewImages] = useState(editAccommodation.images);
+
+  const [amenities, setAmenities] = useState(editAccommodation.amenities);
 
   const [error, setError] = useState("");
 
@@ -83,7 +86,6 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
   const handleWindowResize = () => {
     if (searchRef.current) {
       const searchRect = searchRef.current.getBoundingClientRect();
-      setPopupLeft(searchRect.left);
     }
   };
 
@@ -115,7 +117,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
     //DELETE PREVIOUS IMAGES FROM STORAGE, THEN UPLOAD NEW ONE
     const handleDeleteAndUpload = async () => {
       const prevFBImage = editAccommodation.images;
-      prevFBImage.map(image => deleteFiles(image.firebaseURL).catch(error=>console.log(error, "That image has already been deleted")));
+      prevFBImage.map(image => deleteFiles(image.firebaseURL).catch(error => console.log(error, "That image has already been deleted")));
       return handleUpload({ websiteId, accommId, name, file });
     };
 
@@ -138,6 +140,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
           guests,
           price,
           description,
+          amenities,
           images: images.photos,
         }),
       });
@@ -149,6 +152,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
         setOpenEdit(false);
         fetchData();
         setTimeout(() => {
+          setProgress(1);
           router.refresh();
         }, 500);
       } else {
@@ -159,6 +163,20 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
     } catch (error) {
       setLoading(false);
       console.error("Error in client-side request:", error);
+    }
+  };
+
+  const handleNextStage = e => {
+    e.preventDefault();
+    /* setProgress((progress += 1));*/
+    if (progress === 1) {
+      if (!TestFieldsContentReg(name, destination, city, address, rooms, guests, price, description, true, setError)) {
+        return;
+      }
+      setProgress((progress += 1));
+      setStage1Pass(true);
+    } else if (progress === 2) {
+      setProgress((progress += 1));
     }
   };
 
@@ -178,148 +196,59 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
           onSubmit={handleSubmit}
           className="flex flex-col gap-3 accommodationForm"
         >
-          <div className="form-description-position single-input">
-            <span className="form-description">Name</span>
-            <input
-              type="text"
-              placeholder="Name of accommodation"
-              onChange={e => {
-                setName(e.target.value);
-                setError("");
-              }}
-              value={name}
+          {progress === 1 && (
+            <EditContentStage1
+              destination={destination}
+              setName={setName}
+              setError={setError}
+              handleSearch={handleSearch}
+              setCity={setCity}
+              setAddress={setAddress}
+              setRooms={setRooms}
+              setGuests={setGuests}
+              setPrice={setPrice}
+              setDescription={setDescription}
+              setStage1Pass={setStage1Pass}
+              name={name}
+              city={city}
+              address={address}
+              rooms={rooms}
+              guests={guests}
+              price={price}
+              description={description}
             />
-          </div>
-          <div className="accommodation-field-position">
-            {" "}
-            <div className="form-description-position middle">
-              <span className="form-description">Country</span>
-              <input
-                className="input-margin"
-                type="text"
-                placeholder="Country"
-                onChange={e => {
-                  handleSearch(e);
-                  setError("");
-                }}
-                value={destination}
-              />{" "}
-            </div>{" "}
-            <div className="form-description-position middle">
-              <span className="form-description">City</span>
-              <input
-                className="input-margin"
-                type="text"
-                placeholder="City"
-                onChange={e => setCity(e.target.value)}
-                value={city}
-              />{" "}
-            </div>{" "}
-            <div className="form-description-position middle">
-              <span className="form-description">Address</span>
-              <input
-                type="text"
-                placeholder="Address"
-                onChange={e => setAddress(e.target.value)}
-                value={address}
-              />{" "}
-            </div>
-          </div>
-
-          <div className="accommodation-field-position">
-            {" "}
-            <div className="form-description-position middle">
-              <span className="form-description">Rooms</span>
-              <input
-                className="input-margin"
-                type="number"
-                placeholder="Number of rooms"
-                onChange={e => {
-                  setRooms(e.target.value);
-                  setError("");
-                }}
-                value={rooms}
-              />{" "}
-            </div>{" "}
-            <div className="form-description-position middle">
-              <span className="form-description">Guests</span>
-              <input
-                className="input-margin"
-                type="number"
-                placeholder="Number of guests"
-                onChange={e => {
-                  setGuests(e.target.value);
-                  setError("");
-                }}
-                value={guests}
-              />{" "}
-            </div>{" "}
-            <div className="form-description-position middle">
-              <span className="form-description">Price</span>
-              <input
-                type="number"
-                placeholder="Price per day"
-                onChange={e => {
-                  setPrice(e.target.value);
-                  setError("");
-                }}
-                value={price}
-              />{" "}
-            </div>
-          </div>
-          <div className="form-description-position single-input">
-            <span className="form-description">Description</span>
-            <textarea
-              type="text"
-              placeholder="Short description about your accommodation"
-              onChange={e => {
-                setDescription(e.target.value);
-                setError("");
-              }}
-              value={description}
+          )}
+          {progress === 2 && (
+            <EditContentStage2
+              amenities={amenities}
+              setAmenities={setAmenities}
             />
-          </div>
-          <div
-            className="add-images"
-            onClick={handleUploadButton}
-          >
-            <div className="added-images">
-              {previewImages ? (
-                previewImages.map((photo, index) => {
-                  return (
-                    <div
-                      key={index + 1}
-                      className="possition-images"
-                    >
-                      <img
-                        src={typeof photo === "object" ? photo.downloadURL : photo}
-                        alt="Add image"
-                      />
-                    </div>
-                  );
-                })
-              ) : (
-                <div className="add-image-cont">
-                <div className="possition-images">
-                  <span>Max size of image 2MB</span>
-                  <img
-                    className="add-image-button"
-                    src={`/addImages.png`}
-                    alt="Add image"
-                  />
-                  <span>Upload up to 6 images</span>
-                </div></div>
-              )}
-            </div>
-            {previewImages ? <span className="added-images-num">{`${previewImages.length} / 6`}</span> : null}
-          </div>
+          )}
+          {progress === 3 && (
+            <EditContentStage3
+              handleUploadButton={handleUploadButton}
+              previewImages={previewImages}
+              setError={setError}
+            />
+          )}
 
           {error && <div className="bg-red-500 text-white w-auto text-sm py-2 px-3 rounded-md mt-0 text-center">{error}</div>}
           <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-            <button className="inline-flex w-full justify-center rounded-md bg-yellow-400 px-7 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 sm:ml-3 sm:w-auto">
-              Edit
-            </button>
-            {previewImages ? (
+            {progress === 3 ? (
+              <button className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-7 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-60 sm:ml-3 sm:w-auto">
+                Edit
+              </button>
+            ) : (
+              <button
+                className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:ml-3 sm:w-auto"
+                onClick={e => {
+                  handleNextStage(e);
+                }}
+              >
+                Next
+              </button>
+            )}
+            {previewImages && progress === 3 && (
               <button
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-3
                 sm:mt-0"
@@ -330,13 +259,29 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
               >
                 Remove images
               </button>
-            ) : null}
+            )}
+            {progress > 1 && (
+              <button
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-yellow-400 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:mt-0 sm:ml-3 sm:w-auto"
+                onClick={e => {
+                  e.preventDefault();
+                  setProgress((progress -= 1));
+                  setError("");
+                }}
+              >
+                Previous
+              </button>
+            )}
             <button
               type="button"
               className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
               onClick={() => {
                 setOpenEdit(false);
-                emptyLocalStorage();
+                setTimeout(() => {
+                  emptyLocalStorage();
+                  setProgress(1);
+                  setStage1Pass(false);
+                }, 500);
               }}
               ref={cancelButtonRef}
             >
@@ -351,7 +296,6 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
         destMenuRef={destMenuRef}
         handleDestinationHide={handleDestinationHide}
         setDestination={setDestination}
-        popupLeft={popupLeft}
         searchedDestination={searchedDestination}
       />
 
@@ -361,6 +305,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
         file={file}
         setFile={setFile}
         mutliple={true}
+        setError={setError}
       />
       {loading ? <Loading /> : null}
     </div>

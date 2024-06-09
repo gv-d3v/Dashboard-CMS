@@ -6,7 +6,8 @@ import dynamic from "next/dynamic";
 import AddSVG from "@/app/styles/icons/AddSVG";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import SearchBar from "@/components/SearchBar";
-import Loading from "@/app/loading";
+import Image from "next/image";
+import InfiniteScroll from "@/tools/infiniteScroll";
 
 const DynamicAddContent = dynamic(() => import("@/components/modals/content/AddContentModal"), {
   ssr: false,
@@ -38,6 +39,9 @@ export default function Manage() {
   const [filteredAccommodations, setFilteredAccommodations] = useState([]);
 
   const [componentsLoad, setComponentsLoad] = useState(false);
+
+  const [itemsShown, setItemsShown] = useState(5);
+  const [accLength, setAccLength] = useState(0);
 
   //GET ACCOMMODATIONS
   const fetchData = async () => {
@@ -121,20 +125,31 @@ export default function Manage() {
             placeholder={"accommodation"}
             classAtt={"search-accommodation"}
           />
-          {isLoading === true ? (
-            <Loading
-              ml={"100px"}
-              mt={"100px"}
-            />
-          ) : filteredAccommodations.length > 0 ? (
-            filteredAccommodations.map((accommodation, index) => {
+          {isLoading === true ? null : filteredAccommodations.length > 0 ? (
+            filteredAccommodations.slice(0, itemsShown).map((accommodation, index) => {
+              {
+                !accLength && setAccLength(filteredAccommodations.length);
+              }
+
               if (id === accommodation.websiteId) {
                 return (
                   <li
                     key={index}
                     className="content-list"
                   >
-                    <img src={accommodation.images ? accommodation.images[0].downloadURL : "/house.png"}></img>
+                    <Image
+                      width={240}
+                      height={160}
+                      quality={100}
+                      alt={`Accommodation image ${index + 1}`}
+                      src={
+                        accommodation.images
+                          ? accommodation.images[0] !== undefined
+                            ? accommodation.images[0].downloadURL
+                            : "/house.png"
+                          : "/house.png"
+                      }
+                    />
                     <span>{accommodation.name}</span>
                     <div className="website-buttons">
                       <button
@@ -203,6 +218,12 @@ export default function Manage() {
           )}
         </div>
       </div>
+      <InfiniteScroll
+        setItemsShown={setItemsShown}
+        itemsShown={itemsShown}
+        listLength={accLength}
+        itemsIncrement={5}
+      />
     </div>
   );
 }

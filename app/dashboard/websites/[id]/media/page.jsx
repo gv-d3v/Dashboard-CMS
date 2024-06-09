@@ -2,6 +2,8 @@
 import { GetAccommodations } from "@/app/calls/GetAccommodations";
 import Loading from "@/app/loading";
 import ImagePreview from "@/components/imagePreview";
+import InfiniteScroll from "@/tools/infiniteScroll";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export default function WebsiteMedia() {
@@ -10,6 +12,9 @@ export default function WebsiteMedia() {
   const [image, setImage] = useState(null);
   const [top, setTop] = useState(null);
 
+  const [itemsShown, setItemsShown] = useState(3);
+  const [accLength, setAccLength] = useState(0);
+
   const fetchData = async () => {
     const data = await GetAccommodations();
     setAllAccommodations(data);
@@ -17,7 +22,7 @@ export default function WebsiteMedia() {
   };
 
   const handleMedia = (image, firebase) => {
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
     setTop(window.scrollY);
     setImage(image);
   };
@@ -30,13 +35,17 @@ export default function WebsiteMedia() {
     /*setTimeout(() => {
       setComponentsLoad(true);
     }, 1000);*/
-    (allAccommodations);
+    allAccommodations;
   }, []);
 
   return (
     <div className="media-container h-screen">
-      {!loading && allAccommodations ? (
-        allAccommodations.map((accomm, index) => {
+      {!loading &&
+        allAccommodations &&
+        allAccommodations.slice(0, itemsShown).map((accomm, index) => {
+          {
+            !accLength && setAccLength(allAccommodations.length);
+          }
           return (
             <div
               className="shadow"
@@ -49,13 +58,15 @@ export default function WebsiteMedia() {
               <div className="media-images-container">
                 {accomm.images.map((image, index) => {
                   return (
-                    <img
-                    className="cursor-pointer"
+                    <Image
+                      width={330}
+                      height={200}
+                      className="cursor-pointer"
                       key={index + 1}
                       src={image.downloadURL}
                       alt={`This image is no longer available`}
-                      onClick={() => {
-                        handleMedia(image.downloadURL, image.firebaseURL);
+                      onClick={e => {
+                        handleMedia(e.target.src);
                       }}
                     />
                   );
@@ -70,10 +81,13 @@ export default function WebsiteMedia() {
               ) : null}
             </div>
           );
-        })
-      ) : (
-        <Loading />
-      )}
+        })}
+      <InfiniteScroll
+        setItemsShown={setItemsShown}
+        itemsShown={itemsShown}
+        listLength={accLength}
+        itemsIncrement={3}
+      />
     </div>
   );
 }

@@ -20,3 +20,16 @@ export default function HandleScroll(startY, setState, value, restart, enableScr
     };
   }, [enableScroll]);
 }
+
+/*
+USASGE
+
+startY = hight on which function starts
+setState = state in parrent component that is having class name as value
+value = class name
+restart = remove class name
+enableScroll = enabling function (true, false)
+
+handleScroll(158, setnavS, "nav-scroll", "", enableScroll);
+
+*/

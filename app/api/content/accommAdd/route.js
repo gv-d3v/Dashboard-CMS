@@ -11,11 +11,11 @@ export async function POST(req) {
   }
 
   try {
-    const { websiteId, accommId, name, destination, city, address, rooms, guests, price, description, images } = await req.json();
+    const { websiteId, accommId, name, destination, city, address, rooms, guests, price, description,amenities, images } = await req.json();
 
     await connectMongoDB();
 
-    await Accommodation.create({ websiteId, accommId, name, destination, city, address, rooms, guests, price, description, images });
+    await Accommodation.create({ websiteId, accommId, name, destination, city, address, rooms, guests, price, description,amenities, images });
 
     return NextResponse.json({ message: "Accommodation added." }, { status: 201 });
   } catch (error) {

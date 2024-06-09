@@ -42,6 +42,10 @@ const accommodationSchema = new Schema(
       type: String,
       required: true,
     },
+    amenities: {
+      type: Array,
+      required: false,
+    },
     images: {
       type: Array,
       required: true,

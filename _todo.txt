@@ -10,6 +10,7 @@
     - Phone loading possition
     - Side bar button possition
     - Dashboard menu different view, adjust in settings
+    - Adding and editing accommodations in three phases, basic info, accommodities, images, on next changing state
 
 
 - MAJOR TO DO

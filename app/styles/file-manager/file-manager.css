@@ -45,6 +45,7 @@ button.folders:hover {
   position: absolute;
   top: 5.28rem;
   right: 1.25rem;
+  z-index: 20
 }
 
 .button-close-preview svg {
@@ -54,6 +55,7 @@ button.folders:hover {
   border: 1px solid rgb(31, 41, 55);
   border-radius: 100%;
   background-color: rgb(31, 41, 55);
+  ;
 }
 
 .line-break-ftp {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const WebsiteList = ({ websites }) => {
@@ -9,7 +10,12 @@ const WebsiteList = ({ websites }) => {
             return (
               <div key={index}>
                 <li>
-                  <img src="/www.png" />
+                  <Image
+                    src="/www.png"
+                    width={50}
+                    height={50}
+                    alt="website-image-logo"
+                  />
                   <div className="name-type-section">
                     <span className="website-name">{website.name}</span>
                     <span className="website-link">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 export default function Profile({ setOpenProfile, cancelButtonRef, profile, fromnavbar, setOpenEdit }) {
@@ -12,11 +13,21 @@ export default function Profile({ setOpenProfile, cancelButtonRef, profile, from
   return (
     <div className="inline-block p-5 sm:flex md:flex lg:flex user-profile-modal-content">
       <div className="grid place-items-center mb-auto mt-auto ml-auto mr-auto">
-        <img
-          className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
-          src={typeof images[0] === "object" ? images[0].downloadURL : images}
-          alt="Profile Image"
-        />
+        {typeof images[0] === "object" ? (
+          <Image
+            width={320}
+            height={320}
+            className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
+            src={images[0].downloadURL}
+            alt="Profile Image"
+          />
+        ) : (
+          <img
+            className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
+            src={images}
+            alt="Profile Image"
+          />
+        )}
       </div>
 
       <div className="grid place-items-center">

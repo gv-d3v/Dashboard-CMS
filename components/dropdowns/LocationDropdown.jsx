@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-const LocationDropdown = ({ showDestinationDrop, destMenuRef, handleDestinationHide, setDestination, popupLeft, searchedDestination }) => {
+const LocationDropdown = ({ showDestinationDrop, destMenuRef, handleDestinationHide, setDestination, searchedDestination }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const LocationDropdown = ({ showDestinationDrop, destMenuRef, handleDestinationH
   return (
     <React.Fragment>
       <div
-        style={{ display: isVisible ? "block" : "none", left: `${popupLeft + 55}px`}}
+        style={{ display: isVisible ? "block" : "none"}}
         className={`dropdown-menu destination list ${searchedDestination.length > 0 ? showDestinationDrop : null}`}
         ref={destMenuRef}
         onClick={() => handleDestinationHide()}

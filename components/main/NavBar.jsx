@@ -92,7 +92,6 @@ export default function NavBar() {
     }, 1000);
   });
 
-
   return session ? (
     <Disclosure
       as="nav"
@@ -102,7 +101,7 @@ export default function NavBar() {
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden" >
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="phoneMenuButton relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
                   <span className="absolute -inset-0.5" />
@@ -121,11 +120,11 @@ export default function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start navLogoImageContainter">
-                <div className="flex flex-shrink-0 items-center navLogoImageContainter2" >
+                <div className="flex flex-shrink-0 items-center navLogoImageContainter2">
                   <Link href="/dashboard">
                     <Image
-                      height={32}
-                      width={32}
+                      height={60}
+                      width={60}
                       className="h-8 w-auto navLogoImage"
                       src="/dashboard.png"
                       alt="Website logo"
@@ -148,7 +147,7 @@ export default function NavBar() {
                   </div>
                 </div>
               </div>
-              {!navS || (window.innerWidth < 698) ? (
+              {!navS || window.innerWidth < 698 ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <span className="relative rounded-full bg-gray-800 p-1 text-gray-400">
                     <span className="absolute -inset-1.5" />
@@ -165,11 +164,24 @@ export default function NavBar() {
                       <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className={`h-8 w-8 rounded-full bg-white`}
-                          src={session?.user ? (typeof sessionImage[0] === "object" ? sessionImage[0].downloadURL : sessionImage) : "/user.png"}
-                          alt=""
-                        />
+                        {session?.user ? (
+                          typeof sessionImage[0] === "object" ? (
+                            <Image
+                              className={`h-8 w-8 rounded-full bg-white`}
+                              priority={true}
+                              height={60}
+                              width={60}
+                              src={sessionImage[0].downloadURL}
+                              alt="Profile Image"
+                            />
+                          ) : (
+                            <img
+                              className={`h-8 w-8 rounded-full bg-white`}
+                              src={sessionImage ? sessionImage : "/user.png"}
+                              alt=""
+                            />
+                          )
+                        ) : null}
                       </Menu.Button>
                     </div>
                     <Transition
@@ -228,7 +240,7 @@ export default function NavBar() {
                   className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                   onClick={() => setnavS("")}
                 >
-                  Menu
+                  Navbar
                 </button>
               )}
             </div>

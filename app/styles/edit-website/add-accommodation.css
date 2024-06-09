@@ -38,70 +38,16 @@ button.add-content:hover {
   padding-bottom: 0.5rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  height: auto !important;
 }
 
-/*DROPDOWN*/
-.dropdown-menu {
-  position: absolute;
-  top: 220px;
-  right: 5px;
-  border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  width: auto;
-  padding: 10px 5px 10px 5px;
-  background-color: white;
-  font-size: 14px;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-  animation: fadeInAnimation ease 0.2s;
-  z-index: 1;
-}
-
-.dropdown-menu.show {
-  visibility: visible;
-  opacity: 1;
-}
-
-.dropdown-menu ul li {
-  padding: 3px 15px;
-  border-radius: 20px;
-}
-.dropdown-menu ul li:hover {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.content-list img{
+.content-list img {
   width: 117px;
   height: 80px;
 }
 
-.accomList{
+.accomList {
   padding-bottom: 20px;
-}
-
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.dropdown-menu.destination {
-  right: auto;
-  overflow: hidden;
-  background-color: #fff;
-}
-
-.dropdown-menu.destination.list {
-  width: 300px;
-  max-height: 200px;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: thin;
-  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /*ADD IMAGES*/
@@ -114,6 +60,8 @@ button.add-content:hover {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
   display: grid;
+  margin-top: 40px;
+  margin-bottom: 30px;
 }
 
 .added-images {
@@ -126,11 +74,13 @@ button.add-content:hover {
 
 .added-images img {
   padding: 5px;
-  max-height: 155px;
+  height: 100%;
+  object-fit: scale-down;
 }
 
 .add-image-button {
   height: 110px;
+  width: 110px;
   margin: 0px auto;
   cursor: pointer;
 }
@@ -147,6 +97,8 @@ button.add-content:hover {
 .added-images span {
   font-size: 14px;
   opacity: 0.8;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .form-description-position {
@@ -170,10 +122,23 @@ button.add-content:hover {
   margin-right: auto;
 }
 
-@media screen and (max-width: 1024px) {
-  .dropdown-menu {
-    top: 230px;
+@media screen and (min-width: 1024px) {
+  .modal-position {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
+  .modal-min-width {
+    min-width: 900px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
   .accommodation-modal {
     width: 95%;
     margin: 10px;
@@ -202,14 +167,6 @@ button.add-content:hover {
 
   .input-margin {
     margin: 0;
-  }
-
-  .accommodation-field-position {
-    margin-bottom: -10px;
-  }
-
-  .form-description-position.middle {
-    margin-bottom: 10px;
   }
 }
 
@@ -261,11 +218,6 @@ button.add-content:hover {
 }
 
 @media screen and (max-width: 460px) {
-  .dropdown-menu {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: auto !important;
-  }
   .content-list {
     padding-left: 10px !important;
   }
@@ -292,5 +244,14 @@ button.add-content:hover {
   .deleteAccButton span,
   .editAccButton span {
     display: none !important;
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

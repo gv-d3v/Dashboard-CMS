@@ -3,8 +3,8 @@ import FTPSVG from "@/app/styles/icons/FTPSVG";
 import ManageSVG from "@/app/styles/icons/ManageSVG";
 import MediaSVG from "@/app/styles/icons/MediaSVG";
 import SettingsSVG from "@/app/styles/icons/SettingsSVG";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function SideBar({ id, pathname, mobile, setMobile }) {
   const startPath = `/dashboard/websites/${id}`;
@@ -22,7 +22,9 @@ export default function SideBar({ id, pathname, mobile, setMobile }) {
         className={`side-bar-image-cont ${mobile}`}
         onClick={() => handleMobileSideBar()}
       >
-        <img
+        <Image
+          width={60}
+          height={60}
           src="/dashboard.png"
           alt="Logo"
         />

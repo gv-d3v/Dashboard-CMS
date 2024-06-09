@@ -1,0 +1,62 @@
+.amenities {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.amenities-row {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.amenities-checkbox-container {
+  width: 200px;
+  display: flex;
+}
+
+.amenities-checkbox-container input {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.amenities-checkbox-container label {
+  display: flex;
+  cursor: pointer;
+}
+
+.amenities-checkbox-container label svg {
+  margin-right: 5px;
+  fill: var(--dark);
+}
+
+@media screen and (max-width: 970px) {
+  .amenities-row {
+    display: inline-grid;
+    margin-left: auto;
+    margin-right: auto;
+    width: 33%;
+  }
+  .amenities-checkbox-container {
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .amenities-row {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .amenities-checkbox-container {
+    margin-left: 20px;
+  }
+}
+@media screen and (max-width: 540px) {
+  .amenities-row {
+    width: 100%;
+    margin-left: auto;
+  }
+}

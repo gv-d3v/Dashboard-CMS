@@ -10,6 +10,7 @@ import handleUpload from "../../upload/handleUpload";
 import Loading from "@/app/loading";
 import TestFieldsUserEdit from "@/tools/testFieldsUserEdit";
 import { deleteFiles } from "@/lib/storage";
+import Image from "next/image";
 
 export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, people, editPerson }) {
   const router = useRouter();
@@ -105,13 +106,23 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
     setLoading(true);
 
     //DELETE PREVIOUS IMAGE FROM STORAGE, THEN UPLOAD NEW ONE
-    const handleDeleteAndUpload = async () => {
-      const prevFBImage = editPerson.images[0].firebaseURL;
-      deleteFiles(prevFBImage);
-      return handleUpload({ userId, name, file });
+    const imageChange = async () => {
+      if (file) {
+        if (typeof editPerson.images[0] === "object") {
+          const prevFBImage = editPerson.images[0].firebaseURL;
+          deleteFiles(prevFBImage);
+        }
+        return handleUpload({ userId, name, file });
+      } else {
+        if (typeof editPerson.images[0] === "object") {
+          const prevFBImage = editPerson.images[0].firebaseURL;
+          deleteFiles(prevFBImage);
+        }
+        return { photos: imageUrl };
+      }
     };
 
-    const images = file ? await handleDeleteAndUpload() : { photos: imageUrl };
+    const images = await imageChange();
 
     //API CALL - EDIT USER
     const res = await fetch("/api/team/userEdit", {
@@ -152,12 +163,23 @@ export default function EditForm({ setOpenEdit, cancelButtonRef, fetchData, peop
   return (
     <div className="inline-block px-5 pb-5 sm:flex md:flex lg:flex formPadding">
       <div className="grid place-items-center addImage my-auto  ml-auto mr-4 w-full">
-        <img
-          className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
-          src={addImageUrl[0] !== "/user.png" ? (typeof addImageUrl[0] === "object" ? addImageUrl[0].downloadURL : addImageUrl) : "/addImage.png"}
-          alt="Add Image"
-          onClick={() => setOpenURLModal(true)}
-        />
+        {typeof addImageUrl[0] === "object" ? (
+          <Image
+            width={160}
+            height={160}
+            className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
+            src={addImageUrl[0] !== "/user.png" ? addImageUrl[0].downloadURL : "/addImage.png"}
+            alt="Add Image"
+            onClick={() => setOpenURLModal(true)}
+          />
+        ) : (
+          <img
+            className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
+            src={addImageUrl[0] !== "/user.png" ? addImageUrl : "/addImage.png"}
+            alt="Add Image"
+            onClick={() => setOpenURLModal(true)}
+          />
+        )}
       </div>
 
       <div className="grid place-items-center w-72">

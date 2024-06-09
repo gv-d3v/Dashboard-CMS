@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import handleUpload from "../../upload/handleUpload";
 import dynamic from "next/dynamic";
 import Loading from "@/app/loading";
+import Image from "next/image";
 
 const DynamicAddURLModal = dynamic(() => import("./AddURLModal"), {
   ssr: false,
@@ -126,7 +127,9 @@ export default function RegisterForm({ setOpenAdd, cancelButtonRef, fetchData })
   return (
     <div className="inline-block px-5 pb-5 sm:flex md:flex lg:flex formPadding">
       <div className="grid place-items-center addImage my-auto ml-auto mr-4 w-full">
-        <img
+        <Image
+        width={160}
+        height={160}
           className="imageUrl rounded-lg mb-10 h-40 w-40 sm:mb-20 md:mb-20 lg:mb-20"
           src={addImageUrl}
           alt="Add Image"
