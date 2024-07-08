@@ -2,6 +2,7 @@ import { connectMongoDB } from "@/lib/mongodb";
 import Accommodation from "@/models/accommodation";
 import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/middleware/routeAuth";
+export const dynamic = 'force-dynamic';
 
 export async function GET(req, res) {
   const session = await isAuthenticated();
