@@ -45,6 +45,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
   const [address, setAddress] = useState(editAccommodation.address);
   const [rooms, setRooms] = useState(editAccommodation.rooms);
   const [guests, setGuests] = useState(editAccommodation.guests);
+  const [childrenAllowed, setChildrenAllowed] = useState(editAccommodation.childrenAllowed);
   const [price, setPrice] = useState(editAccommodation.price);
   const [description, setDescription] = useState(editAccommodation.description);
 
@@ -138,6 +139,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
           address,
           rooms,
           guests,
+          childrenAllowed,
           price,
           description,
           amenities,
@@ -206,6 +208,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
               setAddress={setAddress}
               setRooms={setRooms}
               setGuests={setGuests}
+              setChildrenAllowed={setChildrenAllowed}
               setPrice={setPrice}
               setDescription={setDescription}
               setStage1Pass={setStage1Pass}
@@ -214,6 +217,7 @@ export default function EditContentForm({ setOpenEdit, cancelButtonRef, fetchDat
               address={address}
               rooms={rooms}
               guests={guests}
+              childrenAllowed={childrenAllowed}
               price={price}
               description={description}
             />

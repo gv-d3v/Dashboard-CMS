@@ -43,6 +43,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData,
   const [address, setAddress] = useState("");
   const [rooms, setRooms] = useState("");
   const [guests, setGuests] = useState("");
+  const [childrenAllowed, setChildrenAllowed] = useState(false);
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
 
@@ -123,6 +124,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData,
           address,
           rooms,
           guests,
+          childrenAllowed,
           price,
           description,
           amenities,
@@ -186,6 +188,7 @@ export default function AddContentForm({ setOpenAdd, cancelButtonRef, fetchData,
               setAddress={setAddress}
               setRooms={setRooms}
               setGuests={setGuests}
+              setChildrenAllowed={setChildrenAllowed}
               setPrice={setPrice}
               setDescription={setDescription}
               setStage1Pass={setStage1Pass}

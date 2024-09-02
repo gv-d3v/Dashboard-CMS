@@ -66,19 +66,33 @@ export default function EditContentStage1(children) {
             value={children.rooms}
           />{" "}
         </div>{" "}
-        <div className="form-description-position middle">
-          <span className="form-description">Guests</span>
-          <input
-            className="input-margin"
-            type="number"
-            placeholder="Number of guests"
-            onChange={e => {
-              children.setGuests(e.target.value);
-              children.setError("");
-            }}
-            value={children.guests}
-          />{" "}
-        </div>{" "}
+        <div className="guests-box">
+          <div className="form-description-position middle guests">
+            <span className="form-description">Guests</span>
+            <input
+              className="input-margin"
+              type="number"
+              value={children.guests}
+              placeholder="Number of guests"
+              onChange={e => {
+                children.setStage1Pass(false);
+                children.setGuests(e.target.value);
+                children.setError("");
+              }}
+            />
+          </div>
+          <div className="children-allowed">
+            <input
+              type="checkbox"
+              id={"Children"}
+              name={"Children"}
+              value={"Children"}
+              onChange={e => children.setChildrenAllowed(e.target.checked)}
+              checked={children.childrenAllowed}
+            />
+            <label htmlFor={"Children"}>{"Children"}</label>
+          </div>
+        </div>
         <div className="form-description-position middle">
           <span className="form-description">Price</span>
           <input

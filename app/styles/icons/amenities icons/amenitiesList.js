@@ -11,6 +11,7 @@ import Iron from "./Iron";
 import KingBed from "./KingBed";
 import Kitchen from "./Kitchen";
 import Parking from "./Parking";
+import Pets from "./Pets";
 import Pool from "./Pool";
 import SmokeAlarm from "./SmokeAlarm";
 import Smoking from "./Smoking";
@@ -38,4 +39,5 @@ export const amenitiesList = [
   { icon: <Parking />, name: "Free parking" },
   { icon: <Accessible />, name: "Accessible" },
   { icon: <EVCharger />, name: "EV charger" },
+  { icon: <Pets />, name: "Pets" },
 ];

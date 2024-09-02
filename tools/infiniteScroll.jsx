@@ -21,7 +21,6 @@ const InfiniteScroll = ({ setItemsShown, itemsShown, listLength, itemsIncrement 
       if (reachedEnd && listLength >= itemsShown - itemsIncrement) {
         setIsBottom(false);
         incrementItemsShown(itemsIncrement);
-        console.log("increment");
       } else if (reachedEnd && listLength <= itemsShown - itemsIncrement) {
         setIsBottom(true);
       }

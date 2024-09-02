@@ -110,6 +110,33 @@ button.add-content:hover {
   padding: 0 5px;
 }
 
+.guests-box {
+  width: 33.4%;
+  display: flex;
+  padding-right: 5px;
+}
+
+.form-description-position.middle.guests {
+  padding-right: 0px;
+  width: 60%;
+}
+
+.form-description-position.middle.guests input {
+  width: 100%;
+}
+
+.children-allowed {
+  display: flex;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.children-allowed label {
+  margin-left: 5px;
+}
+
 .form-description-position.single-input,
 .form-description-position.single-input input,
 .form-description-position textarea {
@@ -167,6 +194,10 @@ button.add-content:hover {
 
   .input-margin {
     margin: 0;
+  }
+
+  .guests-box {
+    width: auto;
   }
 }
 

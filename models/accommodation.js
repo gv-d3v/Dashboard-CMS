@@ -34,6 +34,10 @@ const accommodationSchema = new Schema(
       type: String,
       required: true,
     },
+    childrenAllowed: {
+      type: Boolean,
+      required: false,
+    },
     price: {
       type: String,
       required: true,
