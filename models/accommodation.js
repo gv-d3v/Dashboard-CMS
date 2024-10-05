@@ -27,11 +27,11 @@ const accommodationSchema = new Schema(
       required: true,
     },
     rooms: {
-      type: String,
+      type: Number,
       required: true,
     },
     guests: {
-      type: String,
+      type: Number,
       required: true,
     },
     childrenAllowed: {
@@ -39,7 +39,7 @@ const accommodationSchema = new Schema(
       required: false,
     },
     price: {
-      type: String,
+      type: Number,
       required: true,
     },
     description: {
