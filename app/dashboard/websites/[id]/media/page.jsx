@@ -1,6 +1,5 @@
 "use client";
 import { GetAccommodations } from "@/app/calls/GetAccommodations";
-import Loading from "@/app/loading";
 import ImagePreview from "@/components/imagePreview";
 import InfiniteScroll from "@/tools/infiniteScroll";
 import Image from "next/image";
