@@ -14,7 +14,7 @@ The application is live and can be tested at the following URL:
 
 ## ⚖️ License & Usage
 
-© 2024 [Your Name / Your Username]. All Rights Reserved.
+© 2024 [Goran Vujkovic/gv-d3v]. All Rights Reserved.
 
 **This project is for demonstration purposes only. You are not permitted to copy, distribute, or use this code for commercial or non-commercial purposes without prior written permission.**
 
